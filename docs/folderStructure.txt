@@ -1,0 +1,119 @@
+Drip Store Client - Project Reference
+=====================================
+
+Project Tree
+------------
+
+drip-store-client/
+|-- public/
+|   `-- favicon.ico
+|
+|-- src/
+|   |-- environments/
+|   |   |-- env-development.ts
+|   |   `-- env-production.ts
+|   |
+|   |-- main.ts
+|   |-- index.html
+|   |-- styles.css
+|   |
+|   `-- app/
+|       |-- app.ts
+|       |-- app.html
+|       |-- app.css
+|       |-- app.config.ts
+|       |-- app.routes.ts
+|       |
+|       |-- core/
+|       |   |-- models/
+|       |   |   `-- product.model.ts
+|       |   |-- services/
+|       |   |   `-- product.service.ts
+|       |   |-- guards/
+|       |   |-- interceptors/
+|       |   `-- constants/
+|       |
+|       |-- shared/
+|       |   |-- components/
+|       |   |   |-- button/
+|       |   |   |   `-- button.ts
+|       |   |   |-- product-card/
+|       |   |   |   `-- product-card.ts
+|       |   |   |-- spinner/
+|       |   |   |   `-- spinner.ts
+|       |   |   |-- modal/
+|       |   |   |   `-- modal.ts
+|       |   |   `-- empty-state/
+|       |   |       `-- empty-state.ts
+|       |   `-- pipes/
+|       |       |-- truncate.pipe.ts
+|       |       `-- egp-currency.pipe.ts
+|       |
+|       |-- auth/
+|       |   |-- login/
+|       |   |   |-- login.ts
+|       |   |   |-- login.html
+|       |   |   `-- login.css
+|       |   |-- register/
+|       |   |   |-- register.ts
+|       |   |   |-- register.html
+|       |   |   `-- register.css
+|       |   |-- forgot-password/
+|       |   |   `-- forgot-password.ts
+|       |   `-- reset-password/
+|       |       `-- reset-password.ts
+|       |
+|       |-- website/
+|       |   |-- layout/
+|       |   |   |-- navbar/
+|       |   |   |   |-- navbar.ts
+|       |   |   |   `-- navbar.html
+|       |   |   |-- footer/
+|       |   |   |   `-- footer.ts
+|       |   |   `-- main-layout/
+|       |   |       |-- main-layout.ts
+|       |   |       `-- main-layout.html
+|       |   |
+|       |   `-- pages/
+|       |       |-- home/
+|       |       |   `-- home.ts
+|       |       |-- products/
+|       |       |   `-- products.ts
+|       |       |-- product-detail/
+|       |       |   `-- product-detail.ts
+|       |       |-- cart/
+|       |       |   `-- cart.ts
+|       |       |-- checkout/
+|       |       |   `-- checkout.ts
+|       |       `-- profile/
+|       |           `-- profile.ts
+|       |
+|       |-- dashboard/
+|       |   |-- layout/
+|       |   |   |-- sidebar/
+|       |   |   |   |-- sidebar.ts
+|       |   |   |   `-- sidebar.html
+|       |   |   `-- dashboard-layout/
+|       |   |       |-- dashboard-layout.ts
+|       |   |       `-- dashboard-layout.html
+|       |   |
+|       |   `-- pages/
+|       |       |-- overview/
+|       |       |   `-- overview.ts
+|       |       |-- products/
+|       |       |   `-- products.ts
+|       |       |-- categories/
+|       |       |   `-- categories.ts
+|       |       |-- orders/
+|       |       |   `-- orders.ts
+|       |       `-- users/
+|       |           `-- users.ts
+|       |
+|       `-- not-found/
+|           `-- not-found.ts
+|
+|-- angular.json
+|-- package.json
+|-- tsconfig.json
+`-- README.md
+

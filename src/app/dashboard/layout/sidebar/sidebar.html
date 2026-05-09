@@ -1,0 +1,85 @@
+<div class="flex h-screen">
+    <aside class="w-72 bg-slate-950 text-white flex flex-col border-r border-slate-800">
+        <div class="h-20 flex items-center px-6 border-b border-slate-800">
+            <div
+                class="w-10 h-10 rounded-xl bg-white text-slate-900 flex items-center justify-center font-bold text-lg">
+                D
+            </div>
+            <div class="ml-3">
+                <h2 class="font-semibold text-lg">Drip Store</h2>
+                <p class="text-xs text-slate-400">Admin Dashboard</p>
+            </div>
+        </div>
+
+        <nav class="flex-1 px-4 py-6 space-y-8 overflow-y-auto">
+            <div>
+                <p class="px-3 mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    Main
+                </p>
+
+                <ul class="space-y-2">
+                    <li>
+                        <a routerLink="/dashboard/overview" routerLinkActive="active"
+                            class="flex items-center gap-3 px-3 py-3 rounded-xl text-white transition hover:bg-slate-700">
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a routerLink="/dashboard/products" routerLinkActive="active"
+                            class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                            <span>Products</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a routerLink="/dashboard/orders" routerLinkActive="active"
+                            class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                            <span>Orders</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a routerLink="/dashboard/users" routerLinkActive="active"
+                            class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                            <span>Users</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <p class="px-3 mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    Management
+                </p>
+
+                <ul class="space-y-2">
+                    <li>
+                        <a routerLink="/dashboard/categories" routerLinkActive="active"
+                            class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                            <span>Categories</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#"
+                            class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                            <span>Analytics</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#"
+                            class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="flex-1 bg-slate-100 p-8">
+        <router-outlet></router-outlet>
+    </main>
+</div>
