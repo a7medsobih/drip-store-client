@@ -1,0 +1,24 @@
+<section class="home-section home-shell">
+  <app-section-header class="mb-xl" [actionHref]="section().header.actionHref"
+    [actionLabel]="section().header.actionLabel" [eyebrow]="section().header.eyebrow"
+    [title]="section().header.title" />
+
+  <div class="grid grid-cols-1 gap-lg sm:grid-cols-2 lg:grid-cols-4">
+    @for (product of section().products; track product._id) {
+    <article class="home-product-card glass-card group overflow-hidden rounded-xl">
+      <div class="aspect-[3/4] overflow-hidden bg-surface-container-low">
+        <img class="h-full w-full object-cover group-hover:scale-105 transition"
+          [src]="environment.baseURL + product.image" [alt]="product.name" />
+      </div>
+
+      <div class="p-md">
+        <h3 class="font-headline-sm text-headline-sm text-primary">
+          {{ product.name }}
+        </h3>
+
+        <p class="mt-xs text-on-surface-variant">{{ product.price }} EGP</p>
+      </div>
+    </article>
+    }
+  </div>
+</section>

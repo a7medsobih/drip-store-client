@@ -1,0 +1,210 @@
+<app-dashboard-page-header
+  title="Testimonials"
+  subtitle="Review customer feedback and moderate published testimonials."
+></app-dashboard-page-header>
+
+@if (toast()) {
+  <div
+    class="fixed right-lg top-lg z-50 rounded-2xl border border-outline-variant/40 bg-surface-container-highest px-md py-sm text-body-sm text-on-surface shadow-xl"
+    role="status"
+  >
+    {{ toast() }}
+  </div>
+}
+
+@if (loading()) {
+  <app-dashboard-table-skeleton [rows]="6"></app-dashboard-table-skeleton>
+} @else if (error()) {
+  <div class="rounded-3xl border border-error/30 bg-error-container/20 p-lg">
+    <p class="text-body-md text-on-error-container">{{ error() }}</p>
+    <button class="mt-md home-btn home-btn--primary" type="button" (click)="fetchTestimonials()">
+      Retry
+    </button>
+  </div>
+} @else {
+  <section class="glass-card rounded-3xl p-lg">
+    <div class="mb-lg space-y-md">
+      <div class="flex flex-wrap gap-sm">
+        @for (tab of statusTabs; track tab.value) {
+          <button
+            type="button"
+            class="home-btn px-md py-xs"
+            [class.home-btn--primary]="filters().status === tab.value"
+            [class.home-btn--ghost]="filters().status !== tab.value"
+            (click)="setStatusFilter(tab.value)"
+          >
+            {{ tab.label }}
+          </button>
+        }
+      </div>
+
+      <div class="grid grid-cols-1 gap-md md:grid-cols-2 xl:grid-cols-4">
+        <select
+          class="rounded-2xl border border-outline-variant/40 bg-surface-container-low px-md py-sm text-body-md text-on-surface outline-none focus:border-primary"
+          [ngModel]="filters().stars"
+          (ngModelChange)="filters.set({ ...filters(), stars: $event })"
+        >
+          <option value="">All Stars</option>
+          @for (star of starOptions; track star) {
+            <option [value]="star">{{ star }}★</option>
+          }
+        </select>
+
+        <input
+          class="rounded-2xl border border-outline-variant/40 bg-surface-container-low px-md py-sm text-body-md text-on-surface outline-none focus:border-primary"
+          type="date"
+          [ngModel]="filters().from"
+          (ngModelChange)="filters.set({ ...filters(), from: $event })"
+        />
+
+        <input
+          class="rounded-2xl border border-outline-variant/40 bg-surface-container-low px-md py-sm text-body-md text-on-surface outline-none focus:border-primary"
+          type="date"
+          [ngModel]="filters().to"
+          (ngModelChange)="filters.set({ ...filters(), to: $event })"
+        />
+
+        <button type="button" class="home-btn home-btn--primary" (click)="applyFilters()">
+          Apply Filters
+        </button>
+      </div>
+    </div>
+
+    <app-dashboard-table
+      [columns]="columns"
+      [rows]="tableRows()"
+      [cellTemplate]="cell"
+      emptyMessage="No testimonials found."
+    >
+      <ng-template #cell let-row let-key="key" let-value="value">
+        @if (key === 'stars') {
+          <app-rating-stars [stars]="starsArray(value)"></app-rating-stars>
+        } @else if (key === 'status') {
+          <app-dashboard-badge [status]="asTestimonial(row)?.status ?? null"></app-dashboard-badge>
+        } @else if (key === 'comment') {
+          <div class="flex flex-wrap items-center gap-sm">
+            <span class="text-body-sm text-on-surface">{{ value }}</span>
+            @if (asTestimonial(row); as testimonial) {
+              <button
+                type="button"
+                class="font-label-caps text-label-caps text-primary transition hover:opacity-80"
+                (click)="openCommentModal(testimonial, $event)"
+              >
+                View
+              </button>
+            }
+          </div>
+        } @else if (key === 'actions') {
+          <div class="flex flex-wrap items-center justify-end gap-sm" (click)="$event.stopPropagation()">
+            @if (asTestimonial(row); as testimonial) {
+              @if (canApprove(testimonial.status)) {
+                <button
+                  type="button"
+                  class="home-btn home-btn--primary px-md py-xs"
+                  [disabled]="updatingId() === testimonial._id"
+                  (click)="approve(testimonial, $event)"
+                >
+                  Approve
+                </button>
+              }
+              @if (canRefuse(testimonial.status)) {
+                <button
+                  type="button"
+                  class="home-btn home-btn--ghost px-md py-xs"
+                  [disabled]="updatingId() === testimonial._id"
+                  (click)="refuse(testimonial, $event)"
+                >
+                  Refuse
+                </button>
+              }
+            }
+          </div>
+        } @else {
+          <span class="text-body-sm text-on-surface">{{ value }}</span>
+        }
+      </ng-template>
+    </app-dashboard-table>
+
+    <div class="mt-lg flex flex-wrap items-center justify-between gap-md">
+      <p class="text-body-sm text-on-surface-variant/80">
+        Page {{ currentPage() }} of {{ totalPages() }} · {{ totalItems() }} testimonials
+      </p>
+      <div class="flex items-center gap-sm">
+        <button
+          type="button"
+          class="home-btn home-btn--ghost"
+          (click)="previousPage()"
+          [disabled]="currentPage() === 1"
+        >
+          Previous
+        </button>
+        <button
+          type="button"
+          class="home-btn home-btn--primary"
+          (click)="nextPage()"
+          [disabled]="currentPage() === totalPages()"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </section>
+}
+
+@if (selectedTestimonial(); as testimonial) {
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center bg-inverse-surface/60 p-md"
+    role="dialog"
+    aria-modal="true"
+    (click)="closeModal()"
+  >
+    <div
+      class="glass-card max-h-[90vh] w-full max-w-content overflow-y-auto rounded-3xl p-lg md:p-xl"
+      (click)="$event.stopPropagation()"
+    >
+      <div class="mb-lg flex items-start justify-between gap-md">
+        <div>
+          <h3 class="font-headline-sm text-headline-sm text-primary">{{ testimonial.userName }}</h3>
+          <app-rating-stars [stars]="starsArray(testimonial.stars)"></app-rating-stars>
+        </div>
+        <button
+          type="button"
+          class="font-label-caps text-label-caps text-on-surface-variant transition hover:opacity-80"
+          (click)="closeModal()"
+        >
+          Close
+        </button>
+      </div>
+
+      <p class="mb-lg whitespace-pre-wrap text-body-md leading-relaxed text-on-surface">
+        {{ testimonial.comment }}
+      </p>
+
+      <div class="flex flex-wrap items-center justify-between gap-md border-t border-outline-variant/30 pt-md">
+        <app-dashboard-badge [status]="testimonial.status"></app-dashboard-badge>
+        <div class="flex flex-wrap gap-sm">
+          @if (canApprove(testimonial.status)) {
+            <button
+              type="button"
+              class="home-btn home-btn--primary"
+              [disabled]="updatingId() === testimonial._id"
+              (click)="approve(testimonial, $event)"
+            >
+              Approve
+            </button>
+          }
+          @if (canRefuse(testimonial.status)) {
+            <button
+              type="button"
+              class="home-btn home-btn--ghost"
+              [disabled]="updatingId() === testimonial._id"
+              (click)="refuse(testimonial, $event)"
+            >
+              Refuse
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+}

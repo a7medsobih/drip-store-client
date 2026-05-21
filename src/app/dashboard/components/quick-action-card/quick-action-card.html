@@ -1,0 +1,42 @@
+<article class="glass-card flex h-full flex-col gap-md rounded-3xl p-lg">
+  <div
+    class="flex h-12 w-12 items-center justify-center rounded-2xl bg-surface-container text-primary"
+  >
+    <span class="material-symbols-outlined">
+      {{ action().icon }}
+    </span>
+  </div>
+
+  <div class="space-y-sm">
+    @if (action().eyebrow) {
+      <p class="font-label-caps text-label-caps text-on-surface-variant/70">
+        {{ action().eyebrow }}
+      </p>
+    }
+
+    <h3 class="font-headline-sm text-headline-sm text-primary">
+      {{ action().title }}
+    </h3>
+    <p class="text-body-sm text-on-surface-variant/80">
+      {{ action().description }}
+    </p>
+  </div>
+
+  @if (action().route) {
+    <a
+      [routerLink]="action().route"
+      class="mt-auto inline-flex items-center gap-sm font-label-caps text-label-caps text-primary transition hover:opacity-80"
+    >
+      <span>{{ action().actionLabel }}</span>
+      <span class="material-symbols-outlined text-base">arrow_forward</span>
+    </a>
+  } @else {
+    <button
+      type="button"
+      class="mt-auto inline-flex items-center gap-sm font-label-caps text-label-caps text-primary transition hover:opacity-80"
+    >
+      <span>{{ action().actionLabel }}</span>
+      <span class="material-symbols-outlined text-base">arrow_forward</span>
+    </button>
+  }
+</article>

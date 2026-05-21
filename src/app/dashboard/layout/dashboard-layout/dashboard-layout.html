@@ -1,2 +1,31 @@
-<app-sidebar></app-sidebar>
-<router-outlet></router-outlet>
+<div class="dashboard-layout">
+  <app-sidebar
+    [isCollapsed]="isCollapsed()"
+    [isMobileOpen]="isMobileOpen()"
+    (collapseToggled)="toggleCollapsed()"
+    (mobileClosed)="closeMobileSidebar()"
+  ></app-sidebar>
+
+  @if (isMobileOpen()) {
+    <button
+      type="button"
+      class="dashboard-layout__overlay"
+      (click)="closeMobileSidebar()"
+      aria-label="Close sidebar"
+    ></button>
+  }
+
+  <div
+    class="dashboard-layout__content"
+    [class.dashboard-layout__content--collapsed]="isCollapsed()"
+  >
+    <app-dashboard-header
+      [pageTitle]="pageTitle()"
+      (menuClicked)="handleMenuClick()"
+    ></app-dashboard-header>
+
+    <main class="dashboard-layout__body">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

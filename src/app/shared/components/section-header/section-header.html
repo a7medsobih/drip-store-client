@@ -1,0 +1,23 @@
+<div [class]="wrapperClass()">
+  <div>
+    @if (eyebrow()) {
+      <span class="mb-sm block font-label-caps text-label-caps text-primary">
+        {{ eyebrow() }}
+      </span>
+    }
+
+    <h2 [class]="titleClass()">{{ title() }}</h2>
+
+    @if (description()) {
+      <p [class]="descriptionClass()">
+        {{ description() }}
+      </p>
+    }
+  </div>
+
+  @if (actionLabel() && actionHref() && align() === 'left') {
+    <a [href]="actionHref()" class="section-link">
+      {{ actionLabel() }}
+    </a>
+  }
+</div>

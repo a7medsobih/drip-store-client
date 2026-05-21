@@ -1,1 +1,21 @@
-<p>home works!</p>
+<main>
+  <app-hero-section [hero]="hero" />
+
+  @if (isFeaturedProductsLoading()) {
+    <section class="home-section home-shell">
+      <app-spinner />
+    </section>
+  } @else {
+    <app-featured-products [section]="featuredSection()" />
+  }
+
+  @if (isBestSellersLoading()) {
+    <section class="home-section home-shell">
+      <app-spinner />
+    </section>
+  } @else {
+    <app-best-sellers [section]="bestSellersSection()" />
+  }
+
+  <app-testimonials [section]="testimonialsSection" />
+</main>

@@ -1,0 +1,140 @@
+:host {
+    display: block;
+}
+
+.font-display {
+    font-family: "Playfair Display", serif;
+}
+
+.nav-link {
+    position: relative;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(72, 71, 63, 0.7);
+    transition: all 0.3s ease;
+    padding-bottom: 6px;
+}
+
+.nav-link:hover {
+    color: var(--color-primary, #5e5c51);
+}
+
+.nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1.5px;
+    background: var(--color-primary, #5e5c51);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+.nav-link.active {
+    color: var(--color-primary, #5e5c51);
+}
+
+.icon-btn {
+    height: 42px;
+    width: 42px;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary, #5e5c51);
+    background: rgba(255, 255, 255, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(16px);
+    transition: all 0.3s ease;
+}
+
+.icon-btn:hover {
+    transform: translateY(-2px);
+    background: white;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+.navbar-auth {
+    margin-left: 0.25rem;
+}
+
+.navbar-auth-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding-inline: 1.25rem;
+    padding-block: 0.625rem;
+}
+
+.navbar-dashboard-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+    white-space: nowrap;
+}
+
+.navbar-user-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    padding: 0.25rem 0.75rem 0.25rem 0.25rem;
+    color: var(--color-primary, #5e5c51);
+    background: rgba(255, 255, 255, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    transition: all 0.3s ease;
+}
+
+.navbar-user-link:hover {
+    background: white;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+.navbar-avatar {
+    display: inline-flex;
+    height: 2rem;
+    width: 2rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background: var(--color-primary, #5e5c51);
+    color: var(--color-on-primary, #fff);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+.navbar-user-name {
+    max-width: 8rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.navbar-mobile-panel {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(20px);
+}
+
+.navbar-mobile-user {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-radius: 1rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}

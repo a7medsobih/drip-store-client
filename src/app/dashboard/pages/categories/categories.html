@@ -1,0 +1,299 @@
+<app-dashboard-page-header
+  title="Categories"
+  subtitle="Manage catalog taxonomy, active states, and subcategory structure."
+  [actionLabel]="headerActionLabel()"
+  (actionClick)="onHeaderAction()"
+></app-dashboard-page-header>
+
+@if (toast()) {
+  <div
+    class="fixed right-lg top-lg z-50 rounded-2xl border border-outline-variant/40 bg-surface-container-highest px-md py-sm text-body-sm text-on-surface shadow-xl"
+    role="status"
+  >
+    {{ toast() }}
+  </div>
+}
+
+<div class="mb-lg flex flex-wrap gap-sm">
+  <button
+    type="button"
+    class="home-btn"
+    [class.home-btn--primary]="activeTab() === 'categories'"
+    [class.home-btn--ghost]="activeTab() !== 'categories'"
+    (click)="setTab('categories')"
+  >
+    Categories
+  </button>
+  <button
+    type="button"
+    class="home-btn"
+    [class.home-btn--primary]="activeTab() === 'subcategories'"
+    [class.home-btn--ghost]="activeTab() !== 'subcategories'"
+    (click)="setTab('subcategories')"
+  >
+    Subcategories
+  </button>
+</div>
+
+@if (activeTab() === 'categories') {
+  @if (loadingCategories()) {
+    <app-dashboard-table-skeleton [rows]="5"></app-dashboard-table-skeleton>
+  } @else if (categoriesError()) {
+    <div class="rounded-3xl border border-error/30 bg-error-container/20 p-lg">
+      <p class="text-body-md text-on-error-container">{{ categoriesError() }}</p>
+      <button class="mt-md home-btn home-btn--primary" type="button" (click)="loadCategories()">
+        Retry
+      </button>
+    </div>
+  } @else {
+    <section class="glass-card rounded-3xl p-lg">
+      <app-dashboard-table
+        [columns]="categoryColumns"
+        [rows]="categoryRows()"
+        emptyMessage="No categories found."
+        [cellTemplate]="categoryCell"
+        (rowClick)="asCategory($event) ? openEditCategory(asCategory($event)!) : null"
+      >
+        <ng-template #categoryCell let-row let-key="key" let-value="value">
+          @if (key === 'active') {
+            <label class="inline-flex cursor-pointer items-center gap-xs" (click)="$event.stopPropagation()">
+              <input
+                type="checkbox"
+                class="h-4 w-4 accent-primary"
+                [checked]="!!value"
+                (change)="asCategory(row) ? toggleCategory(asCategory(row)!, $event) : null"
+              />
+            </label>
+          } @else if (key === 'actions') {
+            <div class="flex items-center justify-end gap-sm" (click)="$event.stopPropagation()">
+              <button
+                type="button"
+                class="text-primary transition hover:opacity-80"
+                (click)="asCategory(row) ? openEditCategory(asCategory(row)!) : null"
+              >
+                <span class="material-symbols-outlined">edit</span>
+              </button>
+              <button
+                type="button"
+                class="text-error transition hover:opacity-80"
+                (click)="asCategory(row) ? deleteCategory(asCategory(row)!, $event) : null"
+              >
+                <span class="material-symbols-outlined">delete</span>
+              </button>
+            </div>
+          } @else {
+            <span class="text-body-sm text-on-surface">{{ value }}</span>
+          }
+        </ng-template>
+      </app-dashboard-table>
+    </section>
+  }
+} @else {
+  <section class="glass-card mb-lg rounded-3xl p-lg">
+    <label class="block space-y-xs">
+      <span class="font-label-caps text-label-caps text-on-surface-variant">Category</span>
+      <select
+        class="w-full max-w-copy rounded-2xl border border-outline-variant/40 bg-surface-container-low px-md py-sm text-body-md text-on-surface outline-none focus:border-primary md:w-auto"
+        [ngModel]="selectedCategoryId()"
+        (ngModelChange)="selectedCategoryId.set($event)"
+      >
+        <option value="">Select category</option>
+        @for (category of categoryFilterOptions(); track category.id) {
+          <option [value]="category.id">{{ category.name }}</option>
+        }
+      </select>
+    </label>
+  </section>
+
+  @if (!selectedCategoryId()) {
+    <p class="text-body-md text-on-surface-variant/80">
+      Select a category to manage its subcategories.
+    </p>
+  } @else if (loadingSubcategories()) {
+    <app-dashboard-table-skeleton [rows]="5"></app-dashboard-table-skeleton>
+  } @else if (subcategoriesError()) {
+    <div class="rounded-3xl border border-error/30 bg-error-container/20 p-lg">
+      <p class="text-body-md text-on-error-container">{{ subcategoriesError() }}</p>
+      <button
+        class="mt-md home-btn home-btn--primary"
+        type="button"
+        (click)="loadSubcategories(selectedCategoryId())"
+      >
+        Retry
+      </button>
+    </div>
+  } @else {
+    <section class="glass-card rounded-3xl p-lg">
+      <app-dashboard-table
+        [columns]="subcategoryColumns"
+        [rows]="subcategoryRows()"
+        emptyMessage="No subcategories found for this category."
+        [cellTemplate]="subcategoryCell"
+        (rowClick)="asSubcategory($event) ? openEditSubcategory(asSubcategory($event)!) : null"
+      >
+        <ng-template #subcategoryCell let-row let-key="key" let-value="value">
+          @if (key === 'active') {
+            <label class="inline-flex cursor-pointer items-center gap-xs" (click)="$event.stopPropagation()">
+              <input
+                type="checkbox"
+                class="h-4 w-4 accent-primary"
+                [checked]="!!value"
+                (change)="asSubcategory(row) ? toggleSubcategory(asSubcategory(row)!, $event) : null"
+              />
+            </label>
+          } @else if (key === 'actions') {
+            <div class="flex items-center justify-end gap-sm" (click)="$event.stopPropagation()">
+              <button
+                type="button"
+                class="text-primary transition hover:opacity-80"
+                (click)="asSubcategory(row) ? openEditSubcategory(asSubcategory(row)!) : null"
+              >
+                <span class="material-symbols-outlined">edit</span>
+              </button>
+              <button
+                type="button"
+                class="text-error transition hover:opacity-80"
+                (click)="asSubcategory(row) ? deleteSubcategory(asSubcategory(row)!, $event) : null"
+              >
+                <span class="material-symbols-outlined">delete</span>
+              </button>
+            </div>
+          } @else {
+            <span class="text-body-sm text-on-surface">{{ value }}</span>
+          }
+        </ng-template>
+      </app-dashboard-table>
+    </section>
+  }
+}
+
+@if (showCategoryForm()) {
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center bg-inverse-surface/60 p-md"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div class="glass-card w-full max-w-copy rounded-3xl p-lg md:p-xl">
+      <div class="mb-lg flex items-center justify-between gap-md">
+        <h3 class="font-headline-sm text-headline-sm text-primary">
+          {{ selectedCategory() ? 'Edit Category' : 'Add Category' }}
+        </h3>
+        <button
+          type="button"
+          class="font-label-caps text-label-caps text-on-surface-variant transition hover:opacity-80"
+          (click)="closeCategoryForm()"
+        >
+          Close
+        </button>
+      </div>
+
+      @if (submitting()) {
+        <app-dashboard-form-skeleton></app-dashboard-form-skeleton>
+      } @else {
+        <form class="space-y-md" (ngSubmit)="saveCategory()">
+          <label class="block space-y-xs">
+            <span class="font-label-caps text-label-caps text-on-surface-variant">Title *</span>
+            <input
+              class="w-full rounded-2xl border border-outline-variant/40 bg-surface-container-low px-md py-sm text-body-md text-on-surface outline-none focus:border-primary"
+              type="text"
+              [ngModel]="categoryForm().title"
+              name="categoryTitle"
+              (ngModelChange)="categoryForm.set({ ...categoryForm(), title: $event })"
+            />
+          </label>
+
+          <label class="inline-flex items-center gap-sm">
+            <input
+              type="checkbox"
+              class="h-4 w-4 accent-primary"
+              [ngModel]="categoryForm().isActive"
+              name="categoryActive"
+              (ngModelChange)="categoryForm.set({ ...categoryForm(), isActive: !!$event })"
+            />
+            <span class="text-body-sm text-on-surface">Active category</span>
+          </label>
+
+          <div class="flex justify-end gap-sm">
+            <button type="button" class="home-btn home-btn--ghost" (click)="closeCategoryForm()">
+              Cancel
+            </button>
+            <button type="submit" class="home-btn home-btn--primary">Save</button>
+          </div>
+        </form>
+      }
+    </div>
+  </div>
+}
+
+@if (showSubcategoryForm()) {
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center bg-inverse-surface/60 p-md"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div class="glass-card w-full max-w-copy rounded-3xl p-lg md:p-xl">
+      <div class="mb-lg flex items-center justify-between gap-md">
+        <h3 class="font-headline-sm text-headline-sm text-primary">
+          {{ selectedSubcategory() ? 'Edit Subcategory' : 'Add Subcategory' }}
+        </h3>
+        <button
+          type="button"
+          class="font-label-caps text-label-caps text-on-surface-variant transition hover:opacity-80"
+          (click)="closeSubcategoryForm()"
+        >
+          Close
+        </button>
+      </div>
+
+      @if (submitting()) {
+        <app-dashboard-form-skeleton></app-dashboard-form-skeleton>
+      } @else {
+        <form class="space-y-md" (ngSubmit)="saveSubcategory()">
+          <label class="block space-y-xs">
+            <span class="font-label-caps text-label-caps text-on-surface-variant">Title *</span>
+            <input
+              class="w-full rounded-2xl border border-outline-variant/40 bg-surface-container-low px-md py-sm text-body-md text-on-surface outline-none focus:border-primary"
+              type="text"
+              [ngModel]="subcategoryForm().title"
+              name="subcategoryTitle"
+              (ngModelChange)="subcategoryForm.set({ ...subcategoryForm(), title: $event })"
+            />
+          </label>
+
+          <label class="block space-y-xs">
+            <span class="font-label-caps text-label-caps text-on-surface-variant">Category *</span>
+            <select
+              class="w-full rounded-2xl border border-outline-variant/40 bg-surface-container-low px-md py-sm text-body-md text-on-surface outline-none focus:border-primary"
+              [ngModel]="subcategoryForm().categoryId"
+              name="subcategoryCategory"
+              (ngModelChange)="subcategoryForm.set({ ...subcategoryForm(), categoryId: $event })"
+            >
+              <option value="">Select category</option>
+              @for (category of categoryFilterOptions(); track category.id) {
+                <option [value]="category.id">{{ category.name }}</option>
+              }
+            </select>
+          </label>
+
+          <label class="inline-flex items-center gap-sm">
+            <input
+              type="checkbox"
+              class="h-4 w-4 accent-primary"
+              [ngModel]="subcategoryForm().isActive"
+              name="subcategoryActive"
+              (ngModelChange)="subcategoryForm.set({ ...subcategoryForm(), isActive: !!$event })"
+            />
+            <span class="text-body-sm text-on-surface">Active subcategory</span>
+          </label>
+
+          <div class="flex justify-end gap-sm">
+            <button type="button" class="home-btn home-btn--ghost" (click)="closeSubcategoryForm()">
+              Cancel
+            </button>
+            <button type="submit" class="home-btn home-btn--primary">Save</button>
+          </div>
+        </form>
+      }
+    </div>
+  </div>
+}

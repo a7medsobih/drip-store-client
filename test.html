@@ -1,0 +1,399 @@
+<!--  -->
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&amp;family=Geist:wght@400;600&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#e6e3d4",
+                        "surface-bright": "#f9f9f9",
+                        "on-primary-fixed-variant": "#48473d",
+                        "secondary-fixed-dim": "#c5c7c8",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed": "#e2e2e2",
+                        "primary-container": "#777569",
+                        "on-secondary-fixed": "#191c1d",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "secondary-container": "#e1e3e4",
+                        "on-surface": "#1a1c1c",
+                        "surface-container-highest": "#e2e2e2",
+                        "error": "#ba1a1a",
+                        "surface": "#f9f9f9",
+                        "secondary-fixed": "#e1e3e4",
+                        "on-secondary-fixed-variant": "#454748",
+                        "on-primary-container": "#fffbff",
+                        "on-error-container": "#93000a",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#e8e8e8",
+                        "error-container": "#ffdad6",
+                        "inverse-on-surface": "#f1f1f1",
+                        "surface-container": "#eeeeee",
+                        "tertiary": "#5a5c5c",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "background": "#f9f9f9",
+                        "surface-dim": "#dadada",
+                        "inverse-surface": "#2f3131",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f4f3f3",
+                        "surface-tint": "#605f53",
+                        "on-primary-fixed": "#1c1c13",
+                        "outline-variant": "#cac6bc",
+                        "on-background": "#1a1c1c",
+                        "on-surface-variant": "#48473f",
+                        "tertiary-container": "#737575",
+                        "surface-variant": "#e2e2e2",
+                        "on-secondary-container": "#626566",
+                        "outline": "#79776e",
+                        "primary": "#5e5c51",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#cac7b9",
+                        "inverse-primary": "#cac7b9",
+                        "secondary": "#5c5f60",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-container": "#fcfcfc",
+                        "on-tertiary-fixed": "#1a1c1c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "xl": "40px",
+                        "container-max": "1280px",
+                        "xxl": "80px",
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "md": "16px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Geist"],
+                        "body-sm": ["Geist"],
+                        "body-md": ["Geist"],
+                        "display-lg-mobile": ["Playfair Display"],
+                        "body-lg": ["Geist"],
+                        "headline-lg": ["Playfair Display"],
+                        "display-lg": ["Playfair Display"],
+                        "display-md": ["Playfair Display"],
+                        "headline-sm": ["Geist"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "display-lg-mobile": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-lg": ["28px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "display-md": ["36px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "headline-sm": ["20px", { "lineHeight": "1.4", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-surface {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+
+<body class="bg-background text-on-background font-body-md min-h-screen flex">
+    <!-- SideNavBar (The Anchor) -->
+    <aside
+        class="hidden md:flex flex-col h-screen left-0 w-64 bg-white/85 backdrop-blur-[16px] border-r border-white/50 shadow-[0_12px_40px_rgba(0,0,0,0.04)] py-xl px-md space-y-md fixed z-40">
+        <div class="mb-xxl px-sm">
+            <h1 class="font-display-lg text-display-lg text-primary leading-tight">Drip Admin</h1>
+            <p class="font-label-caps text-label-caps text-on-surface-variant/70">Management Suite</p>
+        </div>
+        <nav class="flex-grow space-y-sm">
+            <a class="flex items-center gap-md py-md px-sm rounded-xl text-primary font-bold border-r-2 border-primary pr-4 hover:bg-primary/5 transition-all"
+                href="#">
+                <span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+                <span class="font-label-caps text-label-caps">Dashboard</span>
+            </a>
+            <a class="flex items-center gap-md py-md px-sm rounded-xl text-on-surface-variant hover:bg-primary/5 transition-all"
+                href="#">
+                <span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+                <span class="font-label-caps text-label-caps">Inventory</span>
+            </a>
+            <a class="flex items-center gap-md py-md px-sm rounded-xl text-on-surface-variant hover:bg-primary/5 transition-all"
+                href="#">
+                <span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+                <span class="font-label-caps text-label-caps">Analytics</span>
+            </a>
+            <a class="flex items-center gap-md py-md px-sm rounded-xl text-on-surface-variant hover:bg-primary/5 transition-all"
+                href="#">
+                <span class="material-symbols-outlined" data-icon="settings">settings</span>
+                <span class="font-label-caps text-label-caps">Settings</span>
+            </a>
+        </nav>
+        <div class="mt-auto px-sm pt-xl border-t border-outline-variant/20">
+            <div class="flex items-center gap-md">
+                <div class="w-10 h-10 rounded-full bg-primary-fixed overflow-hidden">
+                    <img class="w-full h-full object-cover"
+                        data-alt="A professional headshot of a female executive with a clean, high-key lighting aesthetic. She has a neutral expression and is positioned in front of a soft-focus minimalist architectural background. The color palette is composed of soft taupes and off-whites, matching the premium brand identity of the DRIP STORE dashboard."
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQPYqWsj5NOUKhvmDmjeL63xsp_N1MRW5WqG2qYVP3mjYD6oJaKNBLYiHg-tthvzdOhYxCtoCgdY3RYyur13e_UmvTqqhYkcHyz-wSFYBggdsWu7HB8HDlGLiA2yvGydebXByg_BFdNySVRi50BzLE-VJrFEoaMiVqgLVExYgZpDaZDuvRS9xwgXZNH405P1CUhYVZHPFL-3sLdnmQlD8T_eQI-CFikWUop2shoqiSoJ96zhMi1MLBCYA7Yd7baz3fnQPzoS_34-k" />
+                </div>
+                <div>
+                    <p class="font-label-caps text-label-caps text-primary">Alex Rivera</p>
+                    <p class="text-[10px] text-on-surface-variant">Lead Stylist</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <!-- Main Content Canvas -->
+    <main class="flex-grow md:ml-64 p-lg md:p-xl max-w-container-max mx-auto w-full">
+        <!-- Header -->
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-xxl gap-md">
+            <div>
+                <h2 class="font-display-md text-display-md text-primary tracking-tighter">Daily Overview</h2>
+                <p class="font-body-md text-on-surface-variant/70">Welcome back. Here is what is happening with DRIP
+                    STORE today.</p>
+            </div>
+            <div class="flex gap-md">
+                <button
+                    class="bg-surface-container-high text-primary px-lg py-sm rounded-full font-label-caps text-label-caps hover:bg-surface-dim transition-all">
+                    Generate Report
+                </button>
+                <button
+                    class="bg-primary text-on-primary px-lg py-sm rounded-full font-label-caps text-label-caps shadow-lg hover:opacity-90 transition-all flex items-center gap-sm">
+                    <span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+                    New Listing
+                </button>
+            </div>
+        </header>
+        <!-- KPI Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-lg mb-xxl">
+            <!-- Total Revenue -->
+            <div class="glass-surface p-lg rounded-xl flex flex-col gap-sm">
+                <div class="flex justify-between items-start">
+                    <span class="material-symbols-outlined text-primary" data-icon="payments">payments</span>
+                    <span class="text-xs font-bold text-primary bg-primary/10 px-sm py-[2px] rounded-full">+12.5%</span>
+                </div>
+                <div>
+                    <p class="font-label-caps text-label-caps text-on-surface-variant/60">Total Revenue</p>
+                    <h3 class="font-display-md text-display-md text-primary">$128,430</h3>
+                </div>
+            </div>
+            <!-- Active Orders -->
+            <div class="glass-surface p-lg rounded-xl flex flex-col gap-sm">
+                <div class="flex justify-between items-start">
+                    <span class="material-symbols-outlined text-primary" data-icon="shopping_bag">shopping_bag</span>
+                    <span class="text-xs font-bold text-primary bg-primary/10 px-sm py-[2px] rounded-full">+8%</span>
+                </div>
+                <div>
+                    <p class="font-label-caps text-label-caps text-on-surface-variant/60">Active Orders</p>
+                    <h3 class="font-display-md text-display-md text-primary">482</h3>
+                </div>
+            </div>
+            <!-- Customer Growth -->
+            <div class="glass-surface p-lg rounded-xl flex flex-col gap-sm">
+                <div class="flex justify-between items-start">
+                    <span class="material-symbols-outlined text-primary" data-icon="group">group</span>
+                    <span class="text-xs font-bold text-primary bg-primary/10 px-sm py-[2px] rounded-full">+22%</span>
+                </div>
+                <div>
+                    <p class="font-label-caps text-label-caps text-on-surface-variant/60">New Customers</p>
+                    <h3 class="font-display-md text-display-md text-primary">1,204</h3>
+                </div>
+            </div>
+            <!-- Conversion Rate -->
+            <div class="glass-surface p-lg rounded-xl flex flex-col gap-sm">
+                <div class="flex justify-between items-start">
+                    <span class="material-symbols-outlined text-primary" data-icon="trending_up">trending_up</span>
+                    <span class="text-xs font-bold text-primary bg-primary/10 px-sm py-[2px] rounded-full">+3.2%</span>
+                </div>
+                <div>
+                    <p class="font-label-caps text-label-caps text-on-surface-variant/60">Conversion</p>
+                    <h3 class="font-display-md text-display-md text-primary">4.8%</h3>
+                </div>
+            </div>
+        </div>
+        <!-- Recent Activity Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-lg items-start">
+            <!-- Recent Orders Table -->
+            <div class="lg:col-span-2 glass-surface rounded-xl overflow-hidden">
+                <div class="px-lg py-md border-b border-white/50 flex justify-between items-center">
+                    <h4 class="font-headline-sm text-headline-sm text-primary">Recent Orders</h4>
+                    <button class="font-label-caps text-label-caps text-primary hover:underline">View All</button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-surface-container-low/50">
+                                <th class="px-lg py-md font-label-caps text-label-caps text-on-surface-variant">Order ID
+                                </th>
+                                <th class="px-lg py-md font-label-caps text-label-caps text-on-surface-variant">Product
+                                </th>
+                                <th class="px-lg py-md font-label-caps text-label-caps text-on-surface-variant">Status
+                                </th>
+                                <th
+                                    class="px-lg py-md font-label-caps text-label-caps text-on-surface-variant text-right">
+                                    Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-outline-variant/10">
+                            <tr class="hover:bg-white/40 transition-colors">
+                                <td class="px-lg py-md font-body-sm">#DRP-9201</td>
+                                <td class="px-lg py-md font-body-sm flex items-center gap-sm">
+                                    <div class="w-8 h-8 rounded bg-surface-dim flex-shrink-0 overflow-hidden">
+                                        <img class="w-full h-full object-cover"
+                                            data-alt="Close-up of a high-end minimalist linen blazer in a soft oatmeal color, highlighting the subtle texture and precision stitching. The lighting is diffused and high-key, creating an ethereal and premium feel that matches the DRIP STORE luxury aesthetic. Centered composition with negative space."
+                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlDx2lWZtKtCaO9o0c0Aoo7SQXx8BE42PAbaec5TfRbt_5Q_HuNvADM2_Gn9a3mG_4K_JZsCfFjA1mbZtDPssfjrTwcExXvnIEu5qvOjr4tB8wjZqzNInEdesOy4U7oElaOtlrLUC3jIfX0swbrRemqAW72pB6z9X5yzX9UL8cwIxm5hkxHr9SCWd7IVjEd9KH0FQfdIDPT_lsSzEd1UKJCcbij8tXp0hNl6Ex6cIDL1yQmlNJw230ErZUZcSuz1bWsYB8YE5k-58" />
+                                    </div>
+                                    Linen Essential Blazer
+                                </td>
+                                <td class="px-lg py-md">
+                                    <span
+                                        class="px-sm py-[2px] rounded-full text-[11px] font-bold bg-[#e6f4ea] text-[#1e7e34]">Shipped</span>
+                                </td>
+                                <td class="px-lg py-md font-body-sm text-right">$295.00</td>
+                            </tr>
+                            <tr class="hover:bg-white/40 transition-colors">
+                                <td class="px-lg py-md font-body-sm">#DRP-9202</td>
+                                <td class="px-lg py-md font-body-sm flex items-center gap-sm">
+                                    <div class="w-8 h-8 rounded bg-surface-dim flex-shrink-0 overflow-hidden">
+                                        <img class="w-full h-full object-cover"
+                                            data-alt="Elegant lifestyle shot of a pair of minimalist ceramic vases on a polished marble surface. The lighting is soft and natural, emphasizing the organic curves and matte finish of the objects. The scene is bright and airy, reflecting a sophisticated, light-mode environment characteristic of premium e-commerce design."
+                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCz2Jn8PkJOxFFMhEn8nwawdtWRSMtnMgrzjx99rlHTflOYgat1SwNLC7qlhCxIdOqZj4VZlCIGpjPuXdXzK391JlhlsY13QpXDhhZQVYcsZSbIATBLs0ZsoVS89wg1nP1BjnEiVmUOwiBBEtmfbpChSHcSbQ_L7HGwfRqedWs71qRviH7KsB8VmYWUC_WREaaYxucvOWuYNt67gnf37NVz87Coarka0e_mdYq-sJpIwqZvH56s16drDVdm4vIAmD-R9X5se7HFUMc" />
+                                    </div>
+                                    Artisan Ceramic Set
+                                </td>
+                                <td class="px-lg py-md">
+                                    <span
+                                        class="px-sm py-[2px] rounded-full text-[11px] font-bold bg-[#fff7e6] text-[#b45d00]">Pending</span>
+                                </td>
+                                <td class="px-lg py-md font-body-sm text-right">$112.00</td>
+                            </tr>
+                            <tr class="hover:bg-white/40 transition-colors">
+                                <td class="px-lg py-md font-body-sm">#DRP-9203</td>
+                                <td class="px-lg py-md font-body-sm flex items-center gap-sm">
+                                    <div class="w-8 h-8 rounded bg-surface-dim flex-shrink-0 overflow-hidden">
+                                        <img class="w-full h-full object-cover"
+                                            data-alt="A premium heavy-weight cotton t-shirt in a crisp off-white color, folded neatly on a textured light gray surface. The lighting is bright and architectural, highlighting the quality of the fabric and the minimalist design of the garment. The overall aesthetic is clean, modern, and high-end."
+                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAT7msVO9kYXKrBXSt39y2fxRExMKgxseKEUzr4c5QrYTl79mngIjoZzy3DAKLDs8KD3b9Zsqif6evw-xBKg5CUP8bMmaOgm5sy_bE2C_li1oGedH9vsaK6gEBy6WKbF2RqAPnvJ-Ko0K1dlH8NlrtFeKGv-Nj3rUp-tZK1AO_hBWSQx-rgNv-txEls-SvoDVBtZDV1i8sf9gQls9jYeZmsD7uqGqsqMe2dTtC-ZzSFByZrLF5Kca2mZql3m47jgdfvA4-WecPPS5E" />
+                                    </div>
+                                    Heavyweight Tee
+                                </td>
+                                <td class="px-lg py-md">
+                                    <span
+                                        class="px-sm py-[2px] rounded-full text-[11px] font-bold bg-[#e6f4ea] text-[#1e7e34]">Shipped</span>
+                                </td>
+                                <td class="px-lg py-md font-body-sm text-right">$65.00</td>
+                            </tr>
+                            <tr class="hover:bg-white/40 transition-colors">
+                                <td class="px-lg py-md font-body-sm">#DRP-9204</td>
+                                <td class="px-lg py-md font-body-sm flex items-center gap-sm">
+                                    <div class="w-8 h-8 rounded bg-surface-dim flex-shrink-0 overflow-hidden">
+                                        <img class="w-full h-full object-cover"
+                                            data-alt="High-key studio photography of minimalist white sneakers with subtle taupe accents. The shoes are set against a clean, light-filled background, emphasizing their sleek silhouette and premium materials. The image evokes a sense of architectural precision and ethereal luxury."
+                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqAhuJq3-ZFKVO5rlBPN4FU37Hk1uzEBwNckq-Qxusf4pP35lGEVe_O-6wGPPb68CU5AU0KqtFSx-Xq_Ri-5dalYF8JDdkmu7UpFS51HgG5kIeXOFHdThfd7XuOQFG3SK0SvX6dpvbS6wgmSTmWH6mTfnAfZqbspGzVfNgwRrs5iRgTv3HC12cHbVQNHzZ5sOl7OT_GXuRVeD1hf_E1buNC6VEJdFIcx0Tcrbi4aqxDL8nPW3CH3-xlnimSURVgiQZbWw7Ry3L0H0" />
+                                    </div>
+                                    Sculptural Sneaker
+                                </td>
+                                <td class="px-lg py-md">
+                                    <span
+                                        class="px-sm py-[2px] rounded-full text-[11px] font-bold bg-[#fce8e8] text-[#c53030]">Cancelled</span>
+                                </td>
+                                <td class="px-lg py-md font-body-sm text-right">$420.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Bento Sidebar: Inventory Status -->
+            <div class="flex flex-col gap-lg">
+                <!-- Stock Alert Card -->
+                <div class="glass-surface p-lg rounded-xl relative overflow-hidden">
+                    <div class="relative z-10">
+                        <h4 class="font-headline-sm text-headline-sm text-primary mb-sm">Inventory Alert</h4>
+                        <p class="font-body-sm text-on-surface-variant/70 mb-lg">3 products are currently below their
+                            safety stock threshold.</p>
+                        <div class="space-y-md">
+                            <div class="flex items-center justify-between">
+                                <span class="font-body-sm">Silk Scarf - Sand</span>
+                                <span class="text-error font-bold font-body-sm">2 left</span>
+                            </div>
+                            <div class="w-full bg-surface-container rounded-full h-1">
+                                <div class="bg-error h-1 rounded-full w-[10%]"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Best Seller Mini-Card -->
+                <div class="glass-surface p-lg rounded-xl">
+                    <h4 class="font-label-caps text-label-caps text-on-surface-variant/60 mb-md">Top Performing</h4>
+                    <div class="flex items-center gap-md">
+                        <div class="w-16 h-16 rounded-xl overflow-hidden bg-surface-dim">
+                            <img class="w-full h-full object-cover"
+                                data-alt="A luxury leather tote bag in a deep charcoal gray, showcased in a bright gallery-style setting. The lighting is crisp and emphasizes the smooth texture of the leather and its structured form. The composition is minimalist, reflecting a high-end e-commerce aesthetic focused on essential luxury."
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBc00wvk-Iaddzu4cjfcE8JVVle9XUku90i5SV1zKSAQLdSeFy3Vzh5XK1HA7tFsZ08jvPmuwBgq4yxOacH5XqyI0RLCytZNqfQhx_UdyEWC4V_WF9Q8QsYzC6M6XLExlr4AixhvNIhtmDj_cBNqZnrhcea6uIuWW6iGY50D_xlqEE_V7nvzN3xRyQ1Nk9R1QSabY-3bPHlxj4iprDBhxelMk3m421j6BWFIJ9Mi2Gxu1EQFm1gaKT_K-X6idK-XFWrb6oByHxuJFc" />
+                        </div>
+                        <div>
+                            <p class="font-headline-sm text-headline-sm text-primary">Structured Tote</p>
+                            <p class="text-xs text-on-surface-variant/70">124 units sold this week</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer (The Anchor) -->
+        <footer
+            class="mt-xxl pt-xl border-t border-outline-variant/20 flex flex-col md:flex-row justify-between items-center gap-md pb-xl">
+            <div class="flex flex-col gap-xs items-center md:items-start">
+                <span class="font-display-md text-display-md text-primary">DRIP STORE</span>
+                <p class="font-label-caps text-label-caps text-on-surface-variant">© 2024 DRIP STORE. ESSENTIAL LUXURY.
+                </p>
+            </div>
+            <div class="flex gap-lg">
+                <a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors"
+                    href="#">Privacy</a>
+                <a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors"
+                    href="#">Terms</a>
+                <a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors"
+                    href="#">Shipping</a>
+                <a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors"
+                    href="#">Returns</a>
+                <a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors"
+                    href="#">Contact</a>
+            </div>
+        </footer>
+    </main>
+    <!-- Floating Action Button (Only on Mobile-ish contexts) -->
+    <button
+        class="fixed bottom-lg right-lg w-14 h-14 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center lg:hidden z-50 active:scale-95 transition-transform">
+        <span class="material-symbols-outlined" data-icon="add">add</span>
+    </button>
+</body>
+
+</html>

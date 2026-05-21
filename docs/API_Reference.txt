@@ -1,0 +1,1056 @@
+# Global
+
+## Base & Auth Header
+
+| Item | Value |
+|------|--------|
+| API prefix | `/api/v1` (storefront), `/admin/v1` (catalog admin) |
+| Auth | `Authorization: Bearer <accessToken>` |
+| Content-Type | `application/json` (except product admin upload) |
+| Cookies | **لا يوجد** — tokens في body فقط |
+| CORS headers | `Content-Type`, `Authorization` |
+| Access token TTL | 15m |
+| Refresh token TTL | 7d (`type: "refresh"` في payload) |
+| JWT payload | `{ sub, role, email }` |
+| Roles | `user`, `admin` |
+
+## Response Wrapper
+
+**Success**
+```json
+{ "success": true, "message": "...", "data": {}, "errors": null }
+```
+
+**Error** (`error.middleware.js`)
+```json
+{ "success": false, "message": "...", "data": null, "errors": null }
+```
+
+## Static Files
+
+| Path | Purpose |
+|------|---------|
+| `GET /uploads/products/{filename}` | صور المنتجات (المسار المحفوظ في DB: `/uploads/products/...`) |
+| `GET /api/files/...` | static من `src/uploads` (قد لا يطابق مسار الرفع الفعلي) |
+| `GET /` | `{ "message": "API is running" }` |
+
+---
+
+# Auth
+
+## POST /api/v1/auth/register
+
+### Description
+تسجيل مستخدم + إرسال OTP للتحقق من الإيميل.
+
+### Auth
+Public
+
+### Request (body)
+| Field | Type | Required | Rules |
+|-------|------|----------|-------|
+| name | string | ✓ | model: 2–60 chars |
+| email | string | ✓ | unique, lowercase |
+| password | string | ✓ | يُhash |
+| gender | string | ✓ | `male` \| `female` |
+| mobile | string | | unique if sent |
+| emailConsent | boolean | | default false |
+
+**ملاحظة:** `auth.validation.js` فارغ — لا middleware validation.
+
+### Response (201)
+```json
+{
+  "success": true,
+  "message": "User registered successfully",
+  "data": {
+    "user": {
+      "id": "ObjectId",
+      "name": "...",
+      "email": "...",
+      "mobile": null,
+      "gender": "male|female",
+      "role": "user",
+      "emailConsent": false,
+      "isActive": true,
+      "isVerified": false,
+      "createdAt": "...",
+      "updatedAt": "..."
+    },
+    "otp": "123456"
+  }
+}
+```
+`otp` يظهر **فقط** لو `NODE_ENV !== "production"`.
+
+### Notes
+- 409: email/mobile مستخدم
+- بعد التسجيل: `verify-otp` لتفعيل `isVerified`
+
+---
+
+## POST /api/v1/auth/login
+
+### Auth
+Public
+
+### Request (body)
+`{ email, password }`
+
+### Response (200)
+```json
+{
+  "data": {
+    "user": { "id", "name", "email", "mobile", "gender", "role", "emailConsent", "isActive", "isVerified", "createdAt", "updatedAt" },
+    "tokens": { "accessToken": "...", "refreshToken": "..." }
+  }
+}
+```
+
+### Notes
+- 401: invalid credentials
+- 403: `isActive: false`
+
+---
+
+## POST /api/v1/auth/forgot-password
+
+### Auth
+Public
+
+### Request (body)
+`{ email }`
+
+### Response (200)
+```json
+{ "data": { "email": "...", "otp": "..." } }
+```
+`otp` في dev فقط.
+
+---
+
+## POST /api/v1/auth/verify-otp
+
+### Auth
+Public
+
+### Request (body)
+`{ email, otp }` — OTP 6 أرقام، صلاحية 10 دقائق، max 3 محاولات.
+
+### Response (200)
+```json
+{ "data": { "user": { ...sanitizeUser } } }
+```
+
+### Notes
+- `otpPurpose: verify-email` → `isVerified: true`
+- `otpPurpose: reset-password` → يفتح نافذة `reset-password` لمدة 10 دقائق
+
+---
+
+## POST /api/v1/auth/reset-password
+
+### Auth
+Public (يتطلب OTP reset سابق)
+
+### Request (body)
+`{ email, newPassword }`
+
+### Response (200)
+```json
+{ "data": { "user": { ... } } }
+```
+
+### Notes
+- 401 لو `passwordResetAllowedUntil` منتهي
+
+---
+
+## POST /api/v1/auth/refresh-token
+
+### Auth
+Public
+
+### Request (body)
+`{ refreshToken }`
+
+### Response (200)
+```json
+{ "data": { "accessToken": "..." } }
+```
+
+---
+
+# Users
+
+## GET /api/v1/user/profile
+
+### Auth
+User
+
+### Response (200)
+```json
+{
+  "data": {
+    "_id": "...",
+    "name": "...",
+    "email": "...",
+    "mobile": "...",
+    "gender": "male|female",
+    "role": "user|admin",
+    "emailConsent": false,
+    "isActive": true,
+    "isVerified": false,
+    "createdAt": "...",
+    "updatedAt": "..."
+  }
+}
+```
+
+### Notes
+- يستخدم `_id` وليس `id` (مختلف عن Auth sanitize)
+
+---
+
+## PUT /api/v1/user/profile
+
+### Auth
+User
+
+### Request (body) — واحد على الأقل
+| Field | Rules |
+|-------|-------|
+| name | string, 2–60 |
+| mobile | string, non-empty |
+| gender | `male` \| `female` |
+| emailConsent | boolean |
+
+### Response (200)
+نفس شكل GET profile.
+
+### Notes
+- 409: mobile مستخدم
+
+---
+
+# Addresses
+
+**كل المسارات:** Auth User
+
+## GET /api/v1/addresses
+
+### Response (200)
+```json
+{
+  "data": [
+    {
+      "_id": "...",
+      "userId": "...",
+      "label": "home|work|other",
+      "addressText": "...",
+      "isDefault": true,
+      "createdAt": "...",
+      "updatedAt": "..."
+    }
+  ]
+}
+```
+
+---
+
+## GET /api/v1/addresses/:id
+
+### params
+`id` — ObjectId
+
+---
+
+## POST /api/v1/addresses
+
+### Request (body)
+| Field | Required | Rules |
+|-------|----------|-------|
+| label | ✓ | `home` \| `work` \| `other` |
+| addressText | ✓ | string ≥ 10 chars |
+| isDefault | | boolean |
+
+### Response (201)
+عنصر واحد (نفس schema أعلاه).
+
+### Notes
+- أول عنوان → `isDefault: true` تلقائيًا
+
+---
+
+## PUT /api/v1/addresses/:id
+
+### Request (body)
+`label`, `addressText`, `isDefault` — واحد على الأقل.
+
+---
+
+## DELETE /api/v1/addresses/:id
+
+### Response (200)
+`data: null`
+
+---
+
+# Categories
+
+## GET /api/v1/categories
+
+### Auth
+Public
+
+### Response (200)
+```json
+{
+  "data": [
+    {
+      "_id": "...",
+      "title": "...",
+      "isActive": true,
+      "isDeleted": false,
+      "createdAt": "...",
+      "updatedAt": "..."
+    }
+  ]
+}
+```
+
+### Notes
+- فقط `isActive: true` && `isDeleted: false`
+- الحقل `title` وليس `name`
+
+---
+
+# Categories (Admin)
+
+**Base:** `/admin/v1/categories` — Auth: Admin
+
+## POST /admin/v1/categories
+
+### Request (body)
+| Field | Required |
+|-------|----------|
+| title | ✓ |
+| isActive | boolean, default true |
+
+### Response (201)
+Category document كامل.
+
+---
+
+## PUT /admin/v1/categories/:id
+
+### Request (body)
+`title`, `isActive` — واحد على الأقل.
+
+---
+
+## DELETE /admin/v1/categories/:id
+
+### Response (200)
+`data: null` — soft delete + تعطيل subcategories/products.
+
+---
+
+# SubCategories
+
+## GET /api/v1/subcategories/:id/subcategories
+
+### Auth
+Public
+
+### params
+`:id` = **categoryId** (ليس subcategoryId)
+
+### Response (200)
+```json
+{
+  "data": [
+    {
+      "_id": "...",
+      "title": "...",
+      "categoryId": { "_id": "...", "name": "category title" },
+      "isActive": true,
+      "isDeleted": false,
+      "createdAt": "...",
+      "updatedAt": "..."
+    }
+  ]
+}
+```
+
+### Notes
+- populate: `categoryId` → `{ _id, name }` (من `title`)
+
+---
+
+# SubCategories (Admin)
+
+**Base:** `/admin/v1/subcategories`
+
+## POST /admin/v1/subcategories
+
+### Request (body)
+| Field | Required |
+|-------|----------|
+| title | ✓ |
+| categoryId | ✓ ObjectId |
+| isActive | boolean |
+
+---
+
+## PUT /admin/v1/subcategories/:id
+
+### Request
+`title`, `categoryId`, `isActive`
+
+---
+
+## DELETE /admin/v1/subcategories/:id
+
+Soft delete.
+
+---
+
+# Products
+
+## GET /api/v1/products
+
+### Auth
+Public
+
+### Query
+| Param | Default | Rules |
+|-------|---------|-------|
+| page | 1 | int ≥ 1 |
+| limit | 10 | int ≥ 1 |
+| categoryId | | ObjectId |
+| subCategoryId | | ObjectId (أو `subcategoryId`) |
+| search | | regex على `name` (أو alias `name`) |
+| minPrice | | number ≥ 0 |
+| maxPrice | | number ≥ 0 |
+| sort | newest | `price_asc` \| `price_desc` \| `newest` |
+
+### Response (200)
+```json
+{
+  "data": {
+    "items": [
+      {
+        "_id": "...",
+        "name": "...",
+        "description": "...",
+        "price": 100,
+        "image": "/uploads/products/xxx.jpg",
+        "stock": 10,
+        "categoryId": { "_id": "...", "name": "..." },
+        "subCategoryId": { "_id": "...", "name": "..." },
+        "isActive": true,
+        "isDeleted": false,
+        "createdAt": "...",
+        "updatedAt": "..."
+      }
+    ],
+    "pagination": { "page": 1, "limit": 10, "total": 50, "totalPages": 5 }
+  }
+}
+```
+
+### Notes
+- populate: `categoryId`, `subCategoryId` → `{ _id, name }`
+- **لا يوجد** `GET /products/:id`
+
+---
+
+## GET /api/v1/products/best-sellers
+
+### Auth
+Public
+
+### Response (200)
+```json
+{ "data": [ { ...product fields, "totalSold": 5, categoryId, subCategoryId } ] }
+```
+- max 10، cached 5 min
+
+---
+
+## GET /api/v1/products/new-arrivals
+
+### Auth
+Public
+
+### Response (200)
+```json
+{ "data": [ { ...product, categoryId, subCategoryId } ] }
+```
+- max 10، cached 5 min
+
+---
+
+# Products (Admin)
+
+**Base:** `/admin/v1/products` — Auth: Admin  
+**Content-Type:** `multipart/form-data`  
+**File field:** `image` (required on create)
+
+## POST /admin/v1/products
+
+### Request (form fields)
+| Field | Create | Update |
+|-------|--------|--------|
+| name | ✓ | |
+| description | ✓ | |
+| price | ✓ number ≥ 0 | |
+| stock | ✓ int ≥ 0 | |
+| categoryId | ✓ ObjectId | |
+| subCategoryId | ✓ ObjectId | |
+| isActive | | boolean/`"true"`/`"false"` |
+| image | ✓ file | optional |
+
+### Response (201)
+Product خام **بدون populate**:
+```json
+{
+  "data": {
+    "_id": "...",
+    "name": "...",
+    "description": "...",
+    "price": 100,
+    "image": "/uploads/products/xxx.jpg",
+    "stock": 10,
+    "categoryId": "ObjectId",
+    "subCategoryId": "ObjectId",
+    "isActive": true,
+    "isDeleted": false,
+    "createdAt": "...",
+    "updatedAt": "..."
+  }
+}
+```
+
+---
+
+## PUT /admin/v1/products/:id
+
+نفس الحقول (واحد على الأقل أو image).
+
+---
+
+## DELETE /admin/v1/products/:id
+
+Soft delete (`isDeleted: true`, `isActive: false`).
+
+---
+
+# Cart
+
+**كل المسارات:** Auth User
+
+## GET /api/v1/cart
+
+### Response (200)
+```json
+{
+  "data": {
+    "items": [
+      {
+        "_id": "cartItemId",
+        "userId": "...",
+        "productId": "...",
+        "quantity": 2,
+        "price": 100,
+        "totalPrice": 200,
+        "isPriceChanged": false,
+        "createdAt": "...",
+        "updatedAt": "...",
+        "product": {
+          "_id": "...",
+          "name": "...",
+          "image": "/uploads/products/...",
+          "price": 100,
+          "stock": 10
+        }
+      }
+    ],
+    "summary": { "subtotal": 200, "itemsCount": 2 }
+  }
+}
+```
+
+### Notes
+- sync تلقائي: stock/price، حذف منتجات غير متاحة
+
+---
+
+## POST /api/v1/cart
+
+### Request (body)
+`{ productId: ObjectId, quantity: int ≥ 1 }`
+
+### Response (201)
+نفس شكل GET cart.
+
+### Notes
+- دمج كمية لو المنتج موجود
+
+---
+
+## PUT /api/v1/cart/:id
+
+### params
+`:id` = **cart item _id** (ليس productId)
+
+### Request (body)
+`{ quantity: int ≥ 1 }`
+
+---
+
+## DELETE /api/v1/cart/:id
+
+حذف item واحد → يرجع cart كامل.
+
+---
+
+## DELETE /api/v1/cart
+
+مسح السلة بالكامل.
+
+---
+
+## POST /api/v1/cart/merge
+
+### Request (body)
+```json
+{
+  "items": [
+    { "productId": "...", "quantity": 2 }
+  ]
+}
+```
+
+### Notes
+- لدمج guest cart بعد login
+- يدمج ويحدّ الكمية حسب stock
+
+---
+
+# Orders
+
+**كل المسارات:** Auth (User أو Admin حسب المسار)
+
+### Order Status Values
+`pending` | `processing` | `shipped` | `delivered` | `cancelled` | `refunded`
+
+## POST /api/v1/orders
+
+### Auth
+User
+
+### Request (body)
+`{ addressId: ObjectId }`
+
+### Response (201)
+```json
+{
+  "data": {
+    "_id": "...",
+    "userId": "...",
+    "items": [
+      {
+        "productId": "...",
+        "name": "...",
+        "image": "/uploads/products/...",
+        "price": 100,
+        "quantity": 2,
+        "totalPrice": 200
+      }
+    ],
+    "totalPrice": 200,
+    "shippingAddress": { "label": "home", "addressText": "..." },
+    "status": "pending",
+    "createdAt": "...",
+    "updatedAt": "..."
+  }
+}
+```
+
+### Notes
+- يفرغ cart بعد الطلب
+- transaction: خصم stock
+
+---
+
+## GET /api/v1/orders
+
+### Auth
+User
+
+### Query
+| Param | Default |
+|-------|---------|
+| page | 1 |
+| limit | 10 |
+
+### Response (200)
+```json
+{
+  "data": {
+    "items": [ { ...order lean } ],
+    "pagination": { "page", "limit", "total", "totalPages" }
+  }
+}
+```
+
+---
+
+## PATCH /api/v1/orders/:id/cancel
+
+### Auth
+User (مالك الطلب)
+
+### Response (200)
+Order document بعد `status: cancelled` + استرجاع stock.
+
+### Notes
+- فقط `status === pending`
+
+---
+
+## GET /api/v1/orders/admin
+
+### Auth
+Admin
+
+### Query
+| Param | Default | Rules |
+|-------|---------|-------|
+| page | 1 | |
+| limit | 10 | |
+| status | | order status enum |
+
+### Response (200)
+```json
+{
+  "data": {
+    "items": [
+      {
+        "_id": "...",
+        "userId": { "_id": "...", "name": "...", "email": "...", "mobile": "...", "role": "user" },
+        "items": [...],
+        "totalPrice": 200,
+        "shippingAddress": { "label", "addressText" },
+        "status": "pending",
+        "createdAt": "...",
+        "updatedAt": "..."
+      }
+    ],
+    "pagination": { ... }
+  }
+}
+```
+
+---
+
+## PATCH /api/v1/orders/:id/status
+
+### Auth
+Admin
+
+### Request (body)
+`{ status: "processing|shipped|delivered|cancelled|refunded|..." }`
+
+### Notes
+- `cancelled` → يستدعي cancel logic (استرجاع stock)
+- لا تحديث لطلب `cancelled`
+
+---
+
+# Testimonials
+
+## GET /api/v1/testimonials/public
+
+### Auth
+Public
+
+### Query
+| Param | Default |
+|-------|---------|
+| limit | 10 |
+
+### Response (200)
+```json
+{
+  "data": [
+    {
+      "_id": "...",
+      "userId": { "_id": "...", "name": "..." },
+      "message": "...",
+      "rating": 5,
+      "status": "approved",
+      "createdAt": "...",
+      "updatedAt": "..."
+    }
+  ]
+}
+```
+
+### Notes
+- **بدون pagination wrapper** — array مباشرة
+- فقط `approved`
+
+---
+
+## POST /api/v1/testimonials
+
+### Auth
+User
+
+### Request (body)
+| Field | Rules |
+|-------|-------|
+| message | string 3–500 |
+| rating | number 1–5 |
+
+### Response (201)
+```json
+{
+  "data": {
+    "_id": "...",
+    "userId": "...",
+    "message": "...",
+    "rating": 5,
+    "status": "pending",
+    "createdAt": "...",
+    "updatedAt": "..."
+  }
+}
+```
+
+---
+
+## GET /api/v1/testimonials/admin
+
+### Auth
+Admin
+
+### Query
+`page`, `limit`, `status` (`pending|approved|refused`)
+
+### Response (200)
+```json
+{
+  "data": {
+    "items": [
+      {
+        "_id": "...",
+        "userId": { "_id", "name", "email", "mobile", "role" },
+        "message": "...",
+        "rating": 5,
+        "status": "pending",
+        "createdAt": "...",
+        "updatedAt": "..."
+      }
+    ],
+    "pagination": { ... }
+  }
+}
+```
+
+---
+
+## PATCH /api/v1/testimonials/:id/status
+
+### Auth
+Admin
+
+### Request (body)
+`{ status: "approved|refused|pending" }`
+
+### Notes
+- فقط testimonials بـ `status: pending`
+
+---
+
+# Wishlist
+
+**غير موجود في الكود.** لا routes/models/services.
+
+---
+
+# Refunds
+
+## POST /api/v1/refunds
+
+### Auth
+User
+
+### Request (body)
+`{ orderId: ObjectId, reason: string 3–500 }`
+
+### Response (201)
+```json
+{
+  "data": {
+    "_id": "...",
+    "orderId": "...",
+    "userId": "...",
+    "reason": "...",
+    "status": "pending",
+    "createdAt": "...",
+    "updatedAt": "..."
+  }
+}
+```
+
+### Notes
+- الطلب يجب `delivered`
+- refund واحد لكل order
+
+---
+
+## GET /api/v1/refunds/admin
+
+### Auth
+Admin
+
+### Query
+`page`, `limit`, `status` (`pending|approved|refused`)
+
+### Response (200)
+```json
+{
+  "data": {
+    "items": [
+      {
+        "_id": "...",
+        "userId": { "_id", "name", "email", "mobile", "role" },
+        "orderId": { ...full order object },
+        "reason": "...",
+        "status": "pending",
+        "createdAt": "...",
+        "updatedAt": "..."
+      }
+    ],
+    "pagination": { ... }
+  }
+}
+```
+
+---
+
+## PATCH /api/v1/refunds/:id/status
+
+### Auth
+Admin
+
+### Request (body)
+`{ status: "approved|refused|pending" }`
+
+### Notes
+- `approved` → order `refunded` + استرجاع stock
+
+---
+
+# Dashboard / Reports
+
+## GET /api/v1/reports/admin
+
+### Auth
+Admin
+
+### Query
+| Param | Rules |
+|-------|-------|
+| from | ISO date string |
+| to | ISO date (يُضبط لنهاية اليوم) |
+
+### Response (200)
+```json
+{
+  "data": {
+    "summary": {
+      "totalRevenue": 0,
+      "totalOrders": 0,
+      "unitsSold": 0
+    },
+    "topProducts": [
+      {
+        "productId": "...",
+        "name": "...",
+        "image": "/uploads/products/...",
+        "unitsSold": 10,
+        "revenue": 1000
+      }
+    ]
+  }
+}
+```
+
+### Notes
+- يستثني orders: `cancelled`, `refunded`
+- topProducts: max 10
+- **لا pagination**
+
+---
+
+# Uploads / Files
+
+| Method | Path | Auth | Notes |
+|--------|------|------|-------|
+| — | `POST /admin/v1/products` | Admin | `multipart/form-data`, field `image`, images only |
+| GET | `/uploads/products/{file}` | Public | المسار في product.image |
+| GET | `/api/files/...` | Public | static مختلف عن مسار multer |
+
+---
+
+# Angular Quick Map
+
+| Guard | Endpoints |
+|-------|-----------|
+| Public | auth (ما عدا profile), categories, subcategories, products/*, testimonials/public |
+| AuthInterceptor | كل `/api/v1/*` ما عدا auth public |
+| AdminGuard | `/admin/v1/*`, orders/admin, orders/:id/status, testimonials/admin, testimonials/:id/status, refunds/admin, reports/admin |
+
+| Service | Base URL |
+|---------|----------|
+| AuthService | `/api/v1/auth` |
+| UserService | `/api/v1/user` |
+| AddressService | `/api/v1/addresses` |
+| CatalogService | `/api/v1/categories`, `/api/v1/subcategories`, `/api/v1/products` |
+| AdminCatalogService | `/admin/v1/categories`, `/admin/v1/subcategories`, `/admin/v1/products` |
+| CartService | `/api/v1/cart` |
+| OrderService | `/api/v1/orders` |
+| TestimonialService | `/api/v1/testimonials` |
+| RefundService | `/api/v1/refunds` |
+| ReportService | `/api/v1/reports/admin` |
+
+---
+
+# Suggested Backend Improvements
+
+1. **Wishlist غير مُنفَّذ** — مطلوب module كامل أو إزالته من الـ design doc.
+2. **`GET /api/v1/products/:id` مفقود** — الـ frontend مضطر يعتمد على list فقط.
+3. **Prefix غير موحّد:** storefront `/api/v1` vs admin `/admin/v1` — يُفضَّل `/api/v1/admin/...`.
+4. **User id inconsistent:** Auth → `id`، Profile → `_id`.
+5. **Category field:** DB `title`، populate يرجّع `name` — توحيد في كل الـ responses.
+6. **Auth بدون validation middleware** — أخطاء Mongoose بدل رسائل واضحة.
+7. **`GET testimonials/public`** يرجع array مباشرة؛ باقي list endpoints تستخدم `{ items, pagination }`.
+8. **Product admin response** بدون populate؛ public list مع populate — inconsistency.
+9. **`/api/files` vs `/uploads`** مساران مختلفان لنفس الملفات.
+10. **Subcategories route:** `GET /subcategories/:id/subcategories` — REST غير واضح؛ الأفضل `GET /categories/:id/subcategories`.
+11. **لا rate limiting فعلي** — `rateLimiter.middleware` stub وغير مستخدم.
+12. **لا logout / revoke refresh token.**
+13. **Orders:** لا `GET /orders/:id` للتفاصيل.
+14. **Refunds:** لا list للمستخدم — admin فقط.
+15. **Testimonial refused typo في enum** — `refused` (ليس `rejected`) — توثيق للـ frontend.
+16. **Register:** لا validation على password strength في الكود.
+
+---
+
+**إجمالي endpoints فعلية: 42** (بدون wishlist).  
+لو حابب أحفظ ده كملف `docs/API_REFERENCE.md` في المشروع، قولي وأضيفه.

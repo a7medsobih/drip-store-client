@@ -1,0 +1,30 @@
+<article
+  class="rounded-3xl border bg-[#141414]/90 p-lg text-on-surface shadow-lg backdrop-blur-md"
+  [class]="accentClasses().border"
+>
+  <div class="mb-md flex items-start justify-between gap-md">
+    <span class="material-symbols-outlined text-2xl" [class]="accentClasses().icon">
+      {{ resolvedIcon() }}
+    </span>
+
+    @if (trend()) {
+      <div class="inline-flex items-center gap-xs rounded-full bg-white/5 px-sm py-xs">
+        <span class="material-symbols-outlined text-sm" [class]="accentClasses().trend">
+          {{ trend()!.direction === 'up' ? 'trending_up' : 'trending_down' }}
+        </span>
+        <span class="font-label-caps text-label-caps" [class]="accentClasses().trend">
+          {{ trend()!.value }}%
+        </span>
+      </div>
+    }
+  </div>
+
+  <div class="space-y-sm">
+    <p class="font-label-caps text-label-caps text-on-surface-variant/80">
+      {{ resolvedTitle() }}
+    </p>
+    <h3 class="font-display text-display-lg-mobile md:text-display-md" [class]="accentClasses().value">
+      {{ resolvedValue() }}
+    </h3>
+  </div>
+</article>

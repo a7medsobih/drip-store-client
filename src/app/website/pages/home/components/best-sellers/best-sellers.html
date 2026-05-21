@@ -1,0 +1,32 @@
+<!-- website/pages/home/components/best-sellers/best-sellers.html -->
+<section class="home-section bg-surface-container-low">
+  <div class="home-shell grid grid-cols-1 items-center gap-xl lg:grid-cols-12">
+    <div class="lg:col-span-5">
+      <span class="mb-sm block font-label-caps text-label-caps text-primary">
+        {{ section().eyebrow }}
+      </span>
+
+      <h2 class="mb-md font-display-lg text-display-lg text-on-surface">
+        {{ section().title }}
+      </h2>
+
+      <p class="mb-xl font-body-lg text-body-lg text-on-surface-variant">
+        {{ section().description }}
+      </p>
+
+      <app-button [ariaLabel]="section().actionLabel" variant="outline">
+        {{ section().actionLabel }}
+      </app-button>
+    </div>
+
+    <div class="grid grid-cols-2 gap-md lg:col-span-7">
+      @for (image of section().images; track image.imageUrl) {
+      <div [class]="image.isOffset ? 'pt-xxl' : ''">
+        <div class="glass-card rounded-xl p-xs">
+          <img class="aspect-[4/5] w-full rounded-lg object-cover" [alt]="image.imageAlt" [src]="image.imageUrl" />
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</section>

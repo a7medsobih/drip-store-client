@@ -1,10 +1,14 @@
-Drip Store Client - Project Reference
-=====================================
+Drip Store Client - Current Project Structure
+=============================================
 
 Project Tree
 ------------
 
 drip-store-client/
+|-- docs/
+|   |-- drip_store.postman_collection.json
+|   `-- folderStructure.txt
+|
 |-- public/
 |   `-- favicon.ico
 |
@@ -13,107 +17,221 @@ drip-store-client/
 |   |   |-- env-development.ts
 |   |   `-- env-production.ts
 |   |
-|   |-- main.ts
 |   |-- index.html
-|   |-- styles.css
-|   |
+|   |-- main.ts
+|   `-- styles.css
+|   
 |   `-- app/
 |       |-- app.ts
 |       |-- app.html
 |       |-- app.css
+|       |-- app.spec.ts
 |       |-- app.config.ts
-|       |-- app.routes.ts
-|       |
-|       |-- core/
-|       |   |-- models/
-|       |   |   `-- product.model.ts
-|       |   |-- services/
-|       |   |   `-- product.service.ts
-|       |   |-- guards/
-|       |   |-- interceptors/
-|       |   `-- constants/
-|       |
-|       |-- shared/
-|       |   |-- components/
-|       |   |   |-- button/
-|       |   |   |   `-- button.ts
-|       |   |   |-- product-card/
-|       |   |   |   `-- product-card.ts
-|       |   |   |-- spinner/
-|       |   |   |   `-- spinner.ts
-|       |   |   |-- modal/
-|       |   |   |   `-- modal.ts
-|       |   |   `-- empty-state/
-|       |   |       `-- empty-state.ts
-|       |   `-- pipes/
-|       |       |-- truncate.pipe.ts
-|       |       `-- egp-currency.pipe.ts
-|       |
+|       `-- app.routes.ts
+|       
 |       |-- auth/
 |       |   |-- login/
 |       |   |   |-- login.ts
 |       |   |   |-- login.html
-|       |   |   `-- login.css
+|       |   |   |-- login.css
+|       |   |   `-- login.spec.ts
 |       |   |-- register/
 |       |   |   |-- register.ts
 |       |   |   |-- register.html
-|       |   |   `-- register.css
+|       |   |   |-- register.css
+|       |   |   `-- register.spec.ts
 |       |   |-- forgot-password/
 |       |   |   `-- forgot-password.ts
 |       |   `-- reset-password/
 |       |       `-- reset-password.ts
 |       |
+|       |-- core/
+|       |   |-- constants/
+|       |   |   |-- home.constants.ts
+|       |   |   `-- product.constants.ts
+|       |   |-- models/
+|       |   |   |-- api-response.model.ts
+|       |   |   |-- home.model.ts
+|       |   |   |-- product.model.ts
+|       |   |   `-- testimonial.model.ts
+|       |   `-- services/
+|       |       |-- product.service.ts
+|       |       `-- testimonial.service.ts
+|       |
+|       |-- shared/
+|       |   |-- components/
+|       |   |   |-- button/
+|       |   |   |   `-- button.ts
+|       |   |   |-- empty-state/
+|       |   |   |   `-- empty-state.ts
+|       |   |   |-- modal/
+|       |   |   |   `-- modal.ts
+|       |   |   |-- rating-stars/
+|       |   |   |   |-- rating-stars.ts
+|       |   |   |   `-- rating-stars.html
+|       |   |   |-- section-header/
+|       |   |   |   |-- section-header.ts
+|       |   |   |   `-- section-header.html
+|       |   |   |-- spinner/
+|       |   |   |   `-- spinner.ts
+|       |   |   |-- testimonial-card/
+|       |   |   |   |-- testimonial-card.ts
+|       |   |   |   `-- testimonial-card.html
+|       |   |   `-- skeletons/
+|       |   |       `-- testimonial-skeleton/
+|       |   |           |-- testimonial-skeleton.ts
+|       |   |           `-- testimonial-skeleton.html
+|       |   `-- pipes/
+|       |       |-- egp-currency.pipe.ts
+|       |       `-- truncate.pipe.ts
+|       |
 |       |-- website/
 |       |   |-- layout/
-|       |   |   |-- navbar/
-|       |   |   |   |-- navbar.ts
-|       |   |   |   `-- navbar.html
 |       |   |   |-- footer/
-|       |   |   |   `-- footer.ts
-|       |   |   `-- main-layout/
-|       |   |       |-- main-layout.ts
-|       |   |       `-- main-layout.html
+|       |   |   |   |-- footer.ts
+|       |   |   |   |-- footer.html
+|       |   |   |   |-- footer.css
+|       |   |   |   `-- footer.spec.ts
+|       |   |   |-- main-layout/
+|       |   |   |   |-- main-layout.ts
+|       |   |   |   |-- main-layout.html
+|       |   |   |   |-- main-layout.css
+|       |   |   |   `-- main-layout.spec.ts
+|       |   |   `-- navbar/
+|       |   |       |-- navbar.ts
+|       |   |       |-- navbar.html
+|       |   |       |-- navbar.css
+|       |   |       `-- navbar.spec.ts
 |       |   |
 |       |   `-- pages/
-|       |       |-- home/
-|       |       |   `-- home.ts
-|       |       |-- products/
-|       |       |   `-- products.ts
-|       |       |-- product-detail/
-|       |       |   `-- product-detail.ts
 |       |       |-- cart/
 |       |       |   `-- cart.ts
 |       |       |-- checkout/
 |       |       |   `-- checkout.ts
+|       |       |-- home/
+|       |       |   |-- home.ts
+|       |       |   |-- home.html
+|       |       |   |-- home.css
+|       |       |   `-- home.spec.ts
+|       |       |   `-- components/
+|       |       |       |-- best-sellers/
+|       |       |       |   |-- best-sellers.ts
+|       |       |       |   `-- best-sellers.html
+|       |       |       |-- featured-products/
+|       |       |       |   |-- featured-products.ts
+|       |       |       |   `-- featured-products.html
+|       |       |       |-- hero-section/
+|       |       |       |   |-- hero-section.ts
+|       |       |       |   `-- hero-section.html
+|       |       |       `-- testimonials/
+|       |       |           |-- testimonials.ts
+|       |       |           `-- testimonials.html
+|       |       |-- product-detail/
+|       |       |   `-- product-detail.ts
+|       |       |-- products/
+|       |       |   |-- products.ts
+|       |       |   |-- products.html
+|       |       |   |-- products.css
+|       |       |   |-- products.spec.ts
+|       |       |   `-- products.types.ts
 |       |       `-- profile/
 |       |           `-- profile.ts
 |       |
 |       |-- dashboard/
+|       |   |-- components/
+|       |   |   |-- dashboard-badge/
+|       |   |   |   |-- dashboard-badge.ts
+|       |   |   |   `-- dashboard-badge.html
+|       |   |   |-- dashboard-card/
+|       |   |   |   |-- dashboard-card.ts
+|       |   |   |   `-- dashboard-card.html
+|       |   |   |-- dashboard-empty-state/
+|       |   |   |   |-- dashboard-empty-state.ts
+|       |   |   |   `-- dashboard-empty-state.html
+|       |   |   |-- dashboard-page-header/
+|       |   |   |   |-- dashboard-page-header.ts
+|       |   |   |   `-- dashboard-page-header.html
+|       |   |   |-- dashboard-table/
+|       |   |   |   |-- dashboard-table.ts
+|       |   |   |   `-- dashboard-table.html
+|       |   |   |-- quick-action-card/
+|       |   |   |   |-- quick-action-card.ts
+|       |   |   |   `-- quick-action-card.html
+|       |   |   |-- stat-card/
+|       |   |   |   |-- stat-card.ts
+|       |   |   |   `-- stat-card.html
+|       |   |   `-- skeletons/
+|       |   |       |-- dashboard-stat-card-skeleton/
+|       |   |       |   |-- dashboard-stat-card-skeleton.ts
+|       |   |       |   `-- dashboard-stat-card-skeleton.html
+|       |   |       `-- dashboard-table-skeleton/
+|       |   |           |-- dashboard-table-skeleton.ts
+|       |   |           `-- dashboard-table-skeleton.html
+|       |   |
 |       |   |-- layout/
-|       |   |   |-- sidebar/
-|       |   |   |   |-- sidebar.ts
-|       |   |   |   `-- sidebar.html
-|       |   |   `-- dashboard-layout/
-|       |   |       |-- dashboard-layout.ts
-|       |   |       `-- dashboard-layout.html
+|       |   |   |-- dashboard-header/
+|       |   |   |   |-- dashboard-header.ts
+|       |   |   |   `-- dashboard-header.html
+|       |   |   |-- dashboard-layout/
+|       |   |   |   |-- dashboard-layout.ts
+|       |   |   |   |-- dashboard-layout.html
+|       |   |   |   |-- dashboard-layout.css
+|       |   |   |   `-- dashboard-layout.spec.ts
+|       |   |   |-- dashboard-shell/
+|       |   |   |   |-- dashboard-shell.ts
+|       |   |   |   `-- dashboard-shell.html
+|       |   |   `-- sidebar/
+|       |   |       |-- sidebar.ts
+|       |   |       |-- sidebar.html
+|       |   |       |-- sidebar.css
+|       |   |       `-- sidebar.spec.ts
+|       |   |
+|       |   |-- models/
+|       |   |   |-- dashboard.data.ts
+|       |   |   `-- dashboard.models.ts
 |       |   |
 |       |   `-- pages/
-|       |       |-- overview/
-|       |       |   `-- overview.ts
-|       |       |-- products/
-|       |       |   `-- products.ts
 |       |       |-- categories/
-|       |       |   `-- categories.ts
+|       |       |   |-- categories.ts
+|       |       |   `-- categories.html
 |       |       |-- orders/
-|       |       |   `-- orders.ts
+|       |       |   |-- orders.ts
+|       |       |   |-- orders.html
+|       |       |   |-- orders.css
+|       |       |   `-- orders.spec.ts
+|       |       |-- overview/
+|       |       |   |-- overview.ts
+|       |       |   `-- overview.html
+|       |       |-- products/
+|       |       |   |-- products.ts
+|       |       |   |-- products.html
+|       |       |   |-- products.css
+|       |       |   `-- products.spec.ts
 |       |       `-- users/
-|       |           `-- users.ts
+|       |           |-- users.ts
+|       |           |-- users.html
+|       |           |-- users.css
+|       |           `-- users.spec.ts
 |       |
 |       `-- not-found/
-|           `-- not-found.ts
+|           |-- not-found.ts
+|           |-- not-found.html
+|           |-- not-found.css
+|           `-- not-found.spec.ts
 |
 |-- angular.json
 |-- package.json
+|-- package-lock.json
+|-- README.md
+|-- test.html
+|-- tsconfig.app.json
 |-- tsconfig.json
-`-- README.md
+`-- tsconfig.spec.json
 
+
+Notes
+-----
+- `website/` contains the customer-facing storefront.
+- `dashboard/` contains the admin side with reusable dashboard-specific components.
+- `core/` contains app-wide models, constants, and API services.
+- `shared/` contains generic reusable UI and pipes used across features.

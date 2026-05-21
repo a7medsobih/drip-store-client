@@ -1,0 +1,27 @@
+<section class="relative flex h-screen items-center justify-center overflow-hidden">
+  <img
+    class="absolute inset-0 h-full w-full object-cover"
+    [alt]="hero().imageAlt"
+    [src]="hero().imageUrl"
+  />
+
+  <div class="hero-glass relative z-10 mx-4 max-w-2xl rounded-[32px] p-xl text-center md:p-xxl">
+    <h1 class="mb-md font-display-lg text-display-lg-mobile text-primary md:text-display-lg">
+      {{ hero().title }}
+    </h1>
+
+    <p class="mb-xl font-body-lg text-body-lg text-on-surface-variant">
+      {{ hero().description }}
+    </p>
+
+    <div class="flex flex-col justify-center gap-md md:flex-row">
+      <app-button [ariaLabel]="hero().primaryActionLabel" variant="primary">
+        {{ hero().primaryActionLabel }}
+      </app-button>
+
+      <app-button [ariaLabel]="hero().secondaryActionLabel" variant="ghost">
+        {{ hero().secondaryActionLabel }}
+      </app-button>
+    </div>
+  </div>
+</section>

@@ -1,1 +1,63 @@
-<p>login works!</p>
+<section class="auth-page store-auth-page">
+  <div class="auth-page__layout store-auth-layout">
+    <div class="auth-card glass-card store-auth-card">
+        <div class="auth-card-header">
+          <p class="font-label-caps text-label-caps text-primary lg:hidden">Drip Store</p>
+          <div class="store-auth-eyebrow">Welcome back</div>
+          <h2 class="font-display text-display-lg-mobile text-primary md:text-display-md">
+            Sign in
+          </h2>
+          <p class="text-body-md text-on-surface-variant/80">
+            Continue shopping with your account details.
+          </p>
+        </div>
+
+        <div class="store-auth-benefits">
+          <span class="store-auth-benefit">Wishlist synced</span>
+          <span class="store-auth-benefit">Orders in one place</span>
+        </div>
+
+        <form class="space-y-md" (ngSubmit)="submit()">
+          <label class="block space-y-sm">
+            <span class="font-label-caps text-label-caps text-on-surface-variant">Email</span>
+            <input class="auth-input" type="email" name="email" [ngModel]="email()" (ngModelChange)="email.set($event)"
+              autocomplete="username" placeholder="you@example.com" />
+          </label>
+
+          <label class="block space-y-sm">
+            <span class="font-label-caps text-label-caps text-on-surface-variant">Password</span>
+            <input class="auth-input" type="password" name="password" [ngModel]="password()"
+              (ngModelChange)="password.set($event)" autocomplete="current-password"
+              placeholder="Enter your password" />
+          </label>
+
+          @if (errorMessage()) {
+          <p class="rounded-2xl bg-error-container px-md py-sm text-body-sm text-on-error-container">
+            {{ errorMessage() }}
+          </p>
+          }
+
+          <div class="auth-form-actions">
+            <a routerLink="/forgot-password"
+              class="font-label-caps text-label-caps text-primary transition hover:opacity-80">
+              Forgot password?
+            </a>
+            <div class="auth-submit">
+              <app-button type="submit" [variant]="'primary'">
+                {{ isSubmitting() ? 'Signing in...' : 'Sign in' }}
+              </app-button>
+            </div>
+          </div>
+        </form>
+
+        <div class="store-auth-footer">
+          <p class="text-body-sm text-on-surface-variant/80">
+            New to Drip Store?
+            <a routerLink="/register" class="text-primary transition hover:opacity-80">
+              Create an account
+            </a>
+          </p>
+        </div>
+      </div>
+  </div>
+</section>

@@ -1,6 +1,8 @@
-import { provideHttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
 
+import { CategoriesService } from '@dashboard/services/categories.service';
+import { ProductsService } from '@dashboard/services/products.service';
 import { Products } from './products';
 
 describe('Products', () => {
@@ -10,7 +12,29 @@ describe('Products', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [Products],
-      providers: [provideHttpClient()],
+      providers: [
+        {
+          provide: ProductsService,
+          useValue: {
+            getProducts: () =>
+              of({
+                success: true,
+                message: 'ok',
+                data: {
+                  items: [],
+                  pagination: { page: 1, limit: 20, total: 0, totalPages: 1 },
+                },
+              }),
+          },
+        },
+        {
+          provide: CategoriesService,
+          useValue: {
+            getCategories: () => of([]),
+            getSubcategories: () => of([]),
+          },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Products);

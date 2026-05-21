@@ -1,1 +1,240 @@
-<p>orders works!</p>
+<app-dashboard-page-header
+  title="Orders"
+  subtitle="Track fulfillment, update statuses, and review order details."
+></app-dashboard-page-header>
+
+@if (toast()) {
+  <div
+    class="fixed right-lg top-lg z-50 rounded-2xl border border-outline-variant/40 bg-surface-container-highest px-md py-sm text-body-sm text-on-surface shadow-xl"
+    role="status"
+  >
+    {{ toast() }}
+  </div>
+}
+
+@if (loading()) {
+  <app-dashboard-table-skeleton [rows]="6"></app-dashboard-table-skeleton>
+} @else if (error()) {
+  <div class="rounded-3xl border border-error/30 bg-error-container/20 p-lg">
+    <p class="text-body-md text-on-error-container">{{ error() }}</p>
+    <button class="mt-md home-btn home-btn--primary" type="button" (click)="fetchOrders()">
+      Retry
+    </button>
+  </div>
+} @else {
+  <section class="glass-card rounded-3xl p-lg">
+    <div class="mb-lg grid grid-cols-1 gap-md md:grid-cols-2 xl:grid-cols-5">
+      <select
+        class="rounded-2xl border border-outline-variant/40 bg-surface-container-low px-md py-sm text-body-md text-on-surface outline-none focus:border-primary"
+        [ngModel]="filters().status"
+        (ngModelChange)="filters.set({ ...filters(), status: $event })"
+      >
+        <option value="">All Statuses</option>
+        @for (status of orderStatuses; track status) {
+          <option [value]="status">{{ statusLabel(status) }}</option>
+        }
+      </select>
+
+      <input
+        class="rounded-2xl border border-outline-variant/40 bg-surface-container-low px-md py-sm text-body-md text-on-surface outline-none focus:border-primary"
+        type="date"
+        [ngModel]="filters().from"
+        (ngModelChange)="filters.set({ ...filters(), from: $event })"
+      />
+
+      <input
+        class="rounded-2xl border border-outline-variant/40 bg-surface-container-low px-md py-sm text-body-md text-on-surface outline-none focus:border-primary"
+        type="date"
+        [ngModel]="filters().to"
+        (ngModelChange)="filters.set({ ...filters(), to: $event })"
+      />
+
+      <input
+        class="rounded-2xl border border-outline-variant/40 bg-surface-container-low px-md py-sm text-body-md text-on-surface outline-none focus:border-primary xl:col-span-2"
+        type="search"
+        placeholder="Order ID or mobile..."
+        [ngModel]="filters().search"
+        (ngModelChange)="filters.set({ ...filters(), search: $event })"
+      />
+
+      <button type="button" class="home-btn home-btn--primary md:col-span-2 xl:col-span-1" (click)="applyFilters()">
+        Apply Filters
+      </button>
+    </div>
+
+    <app-dashboard-table
+      [columns]="columns"
+      [rows]="tableRows()"
+      [loading]="loading()"
+      [cellTemplate]="cell"
+      emptyMessage="No orders found."
+    >
+      <ng-template #cell let-row let-key="key" let-value="value">
+        @if (key === 'status') {
+          <app-dashboard-badge [status]="asOrder(row)?.status ?? null"></app-dashboard-badge>
+        } @else if (key === 'actions') {
+          <div class="flex flex-wrap items-center justify-end gap-sm" (click)="$event.stopPropagation()">
+            <button
+              type="button"
+              class="home-btn home-btn--ghost px-md py-xs"
+              (click)="asOrder(row) ? viewOrder(asOrder(row)!, $event) : null"
+            >
+              View
+            </button>
+            @if (asOrder(row); as order) {
+              <select
+                class="rounded-full border border-outline-variant/40 bg-surface-container-low px-sm py-xs text-body-sm text-on-surface outline-none focus:border-primary"
+                [value]="order.status"
+                (change)="onInlineStatusChange(order, $event)"
+              >
+                @for (status of orderStatuses; track status) {
+                  <option [value]="status">{{ statusLabel(status) }}</option>
+                }
+              </select>
+            }
+          </div>
+        } @else {
+          <span class="text-body-sm text-on-surface">{{ value }}</span>
+        }
+      </ng-template>
+    </app-dashboard-table>
+
+    <div class="mt-lg flex flex-wrap items-center justify-between gap-md">
+      <p class="text-body-sm text-on-surface-variant/80">
+        Page {{ currentPage() }} of {{ totalPages() }} · {{ totalItems() }} orders
+      </p>
+      <div class="flex items-center gap-sm">
+        <button
+          type="button"
+          class="home-btn home-btn--ghost"
+          (click)="previousPage()"
+          [disabled]="currentPage() === 1"
+        >
+          Previous
+        </button>
+        <button
+          type="button"
+          class="home-btn home-btn--primary"
+          (click)="nextPage()"
+          [disabled]="currentPage() === totalPages()"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </section>
+}
+
+@if (selectedOrder(); as order) {
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center bg-inverse-surface/60 p-md"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div class="glass-card max-h-[90vh] w-full max-w-content overflow-y-auto rounded-3xl p-lg md:p-xl">
+      <div class="mb-lg flex items-center justify-between gap-md">
+        <h3 class="font-headline-sm text-headline-sm text-primary">Order Details</h3>
+        <button
+          type="button"
+          class="font-label-caps text-label-caps text-on-surface-variant transition hover:opacity-80"
+          (click)="closeModal()"
+        >
+          Close
+        </button>
+      </div>
+
+      @if (loadingDetails()) {
+        <p class="text-body-md text-on-surface-variant/80">Loading order details...</p>
+      } @else {
+        <div class="mb-lg grid grid-cols-1 gap-md md:grid-cols-2">
+          <div>
+            <p class="font-label-caps text-label-caps text-on-surface-variant">Order ID</p>
+            <p class="text-body-md text-on-surface">{{ order._id }}</p>
+          </div>
+          <div>
+            <p class="font-label-caps text-label-caps text-on-surface-variant">Date</p>
+            <p class="text-body-md text-on-surface">{{ order.createdAt | date: 'medium' }}</p>
+          </div>
+          <div class="md:col-span-2">
+            <p class="font-label-caps text-label-caps text-on-surface-variant">Address</p>
+            <p class="text-body-md text-on-surface">{{ order.address }}</p>
+          </div>
+          <div>
+            <p class="font-label-caps text-label-caps text-on-surface-variant">Phone</p>
+            <p class="text-body-md text-on-surface">{{ order.phoneNumber }}</p>
+          </div>
+          <div>
+            <p class="font-label-caps text-label-caps text-on-surface-variant">Customer</p>
+            <p class="text-body-md text-on-surface">{{ order.userName }}</p>
+          </div>
+        </div>
+
+        <div class="mb-lg overflow-x-auto rounded-2xl border border-outline-variant/30">
+          <table class="dashboard-table w-full min-w-[480px] border-collapse text-left">
+            <thead>
+              <tr class="bg-surface-container-low">
+                <th class="px-md py-sm font-label-caps text-label-caps text-on-surface-variant">
+                  Product
+                </th>
+                <th class="px-md py-sm text-right font-label-caps text-label-caps text-on-surface-variant">
+                  Qty
+                </th>
+                <th class="px-md py-sm text-right font-label-caps text-label-caps text-on-surface-variant">
+                  Price
+                </th>
+                <th class="px-md py-sm text-right font-label-caps text-label-caps text-on-surface-variant">
+                  Line Total
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (item of order.products; track item.productId) {
+                <tr class="border-t border-outline-variant/20">
+                  <td class="px-md py-sm text-body-sm text-on-surface">{{ item.name }}</td>
+                  <td class="px-md py-sm text-right text-body-sm text-on-surface">{{ item.quantity }}</td>
+                  <td class="px-md py-sm text-right text-body-sm text-on-surface">
+                    {{ item.price | currency: 'USD' : 'symbol' : '1.0-0' }}
+                  </td>
+                  <td class="px-md py-sm text-right text-body-sm text-on-surface">
+                    {{ lineTotal(item) }}
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mb-lg flex items-center justify-between gap-md">
+          <p class="font-label-caps text-label-caps text-on-surface-variant">Total Price</p>
+          <p class="font-headline-sm text-headline-sm text-primary">
+            {{ order.totalPrice | currency: 'USD' : 'symbol' : '1.0-0' }}
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-end justify-between gap-md border-t border-outline-variant/30 pt-md">
+          <label class="block space-y-xs">
+            <span class="font-label-caps text-label-caps text-on-surface-variant">Status</span>
+            <select
+              class="min-w-[12rem] rounded-2xl border border-outline-variant/40 bg-surface-container-low px-md py-sm text-body-md text-on-surface outline-none focus:border-primary"
+              [ngModel]="modalStatus()"
+              (ngModelChange)="modalStatus.set($event)"
+            >
+              @for (status of orderStatuses; track status) {
+                <option [value]="status">{{ statusLabel(status) }}</option>
+              }
+            </select>
+          </label>
+
+          <button
+            type="button"
+            class="home-btn home-btn--primary"
+            [disabled]="savingStatus() || modalStatus() === order.status"
+            (click)="saveModalStatus()"
+          >
+            {{ savingStatus() ? 'Saving...' : 'Save Status' }}
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+}

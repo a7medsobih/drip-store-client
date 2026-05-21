@@ -1,0 +1,50 @@
+@if (loading()) {
+  <app-dashboard-table-skeleton [rows]="5"></app-dashboard-table-skeleton>
+} @else if (rows().length) {
+  <div class="overflow-x-auto">
+    <table class="dashboard-table w-full min-w-[720px] border-collapse text-left">
+      <thead>
+        <tr class="bg-white/5">
+          @for (column of columns(); track column.key) {
+            <th
+              class="px-lg py-md font-label-caps text-label-caps text-on-surface-variant"
+              [class]="columnClass(column)"
+              [style.width]="column.width ?? null"
+            >
+              {{ column.label }}
+            </th>
+          }
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (row of rows(); track $index) {
+          <tr class="dashboard-table__row cursor-pointer transition-colors" (click)="emitRowClick(row)">
+            @for (column of columns(); track column.key) {
+              @let cell = row[column.key];
+
+              <td class="px-lg py-md align-middle" [class]="columnClass(column)">
+                @if (cellTemplate()) {
+                  <ng-container
+                    *ngTemplateOutlet="
+                      cellTemplate();
+                      context: { $implicit: row, key: column.key, value: cell }
+                    "
+                  ></ng-container>
+                } @else if (column.key === 'status' && asStatus(cell)) {
+                  <app-dashboard-badge [status]="asStatus(cell)"></app-dashboard-badge>
+                } @else {
+                  <span class="text-body-sm text-on-surface-variant/90">
+                    {{ cell }}
+                  </span>
+                }
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+} @else {
+  <app-dashboard-empty-state [message]="resolvedEmptyMessage()"></app-dashboard-empty-state>
+}

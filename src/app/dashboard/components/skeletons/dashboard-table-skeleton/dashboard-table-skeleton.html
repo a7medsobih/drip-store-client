@@ -1,0 +1,18 @@
+<div class="glass-card rounded-3xl p-lg">
+  <div class="mb-lg flex items-center justify-between gap-md">
+    <div class="skeleton-shimmer h-6 w-32 rounded-full"></div>
+    <div class="skeleton-shimmer h-5 w-20 rounded-full"></div>
+  </div>
+
+  <div class="space-y-sm">
+    <div class="skeleton-shimmer h-10 rounded-2xl"></div>
+    @for (item of placeholderRows(); track item) {
+      <div class="grid grid-cols-4 gap-md rounded-2xl px-md py-md">
+        <div class="skeleton-shimmer h-4 rounded-full"></div>
+        <div class="skeleton-shimmer h-4 rounded-full"></div>
+        <div class="skeleton-shimmer h-4 rounded-full"></div>
+        <div class="skeleton-shimmer h-4 rounded-full"></div>
+      </div>
+    }
+  </div>
+</div>

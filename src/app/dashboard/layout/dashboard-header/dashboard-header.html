@@ -1,0 +1,22 @@
+<header class="dashboard-header">
+  <div class="dashboard-header__inner">
+    <div class="dashboard-header__title-group">
+      <button
+        type="button"
+        class="dashboard-header__menu-button"
+        (click)="menuClicked.emit()"
+        aria-label="Open navigation menu"
+      >
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+
+      <h1 class="dashboard-header__title">
+        {{ pageTitle() }}
+      </h1>
+    </div>
+
+    <p class="dashboard-header__admin-name">
+      {{ adminName() }}
+    </p>
+  </div>
+</header>

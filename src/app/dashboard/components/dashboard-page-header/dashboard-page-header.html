@@ -1,0 +1,36 @@
+<section class="flex flex-col gap-md lg:flex-row lg:items-end lg:justify-between">
+  <div class="max-w-3xl space-y-xs">
+    <h2 class="font-display text-display-lg-mobile text-primary md:text-display-md">
+      {{ title() }}
+    </h2>
+    @if (resolvedSubtitle()) {
+      <p class="text-body-md text-on-surface-variant/80">
+        {{ resolvedSubtitle() }}
+      </p>
+    }
+  </div>
+
+  @if (actionLabel()) {
+    <button
+      type="button"
+      class="home-btn home-btn--primary"
+      (click)="actionClick.emit()"
+    >
+      {{ actionLabel() }}
+    </button>
+  } @else if (primaryAction()) {
+    @if (primaryAction()!.route) {
+      <a [routerLink]="primaryAction()!.route" class="home-btn home-btn--primary">
+        {{ primaryAction()!.label }}
+      </a>
+    } @else {
+      <button
+        type="button"
+        class="home-btn home-btn--primary"
+        (click)="actionClick.emit()"
+      >
+        {{ primaryAction()!.label }}
+      </button>
+    }
+  }
+</section>

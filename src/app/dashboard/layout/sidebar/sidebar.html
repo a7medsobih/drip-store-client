@@ -1,85 +1,72 @@
-<div class="flex h-screen">
-    <aside class="w-72 bg-slate-950 text-white flex flex-col border-r border-slate-800">
-        <div class="h-20 flex items-center px-6 border-b border-slate-800">
-            <div
-                class="w-10 h-10 rounded-xl bg-white text-slate-900 flex items-center justify-center font-bold text-lg">
-                D
-            </div>
-            <div class="ml-3">
-                <h2 class="font-semibold text-lg">Drip Store</h2>
-                <p class="text-xs text-slate-400">Admin Dashboard</p>
-            </div>
-        </div>
+<aside
+  class="sidebar"
+  [class.sidebar--collapsed]="isCollapsed()"
+  [class.sidebar--mobile-open]="isMobileOpen()"
+>
+  <div class="sidebar__brand">
+    <div class="sidebar__brand-copy">
+      <span class="sidebar__brand-mark">D</span>
+      <span class="sidebar__brand-text" [class.sidebar__brand-text--hidden]="isCollapsed()">
+        Drip Store
+      </span>
+    </div>
 
-        <nav class="flex-1 px-4 py-6 space-y-8 overflow-y-auto">
-            <div>
-                <p class="px-3 mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Main
-                </p>
+    <button
+      type="button"
+      class="sidebar__mobile-close"
+      (click)="mobileClosed.emit()"
+      aria-label="Close sidebar"
+    >
+      <span class="material-symbols-outlined">close</span>
+    </button>
 
-                <ul class="space-y-2">
-                    <li>
-                        <a routerLink="/dashboard/overview" routerLinkActive="active"
-                            class="flex items-center gap-3 px-3 py-3 rounded-xl text-white transition hover:bg-slate-700">
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
+    <button
+      type="button"
+      class="sidebar__collapse"
+      (click)="collapseToggled.emit()"
+      [attr.aria-label]="isCollapsed() ? 'Expand sidebar' : 'Collapse sidebar'"
+    >
+      <span class="material-symbols-outlined">
+        {{ isCollapsed() ? 'chevron_right' : 'chevron_left' }}
+      </span>
+    </button>
+  </div>
 
-                    <li>
-                        <a routerLink="/dashboard/products" routerLinkActive="active"
-                            class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-300 transition hover:bg-slate-800 hover:text-white">
-                            <span>Products</span>
-                        </a>
-                    </li>
+  <nav class="sidebar__nav">
+    <ul class="sidebar__nav-list">
+      @for (item of navItems; track item.route) {
+        <li>
+          <a
+            [routerLink]="item.route"
+            routerLinkActive="sidebar__link--active"
+            [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
+            (click)="mobileClosed.emit()"
+            class="sidebar__link"
+          >
+            <span class="material-symbols-outlined sidebar__icon">
+              {{ iconName(item.icon) }}
+            </span>
+            <span
+              class="sidebar__label"
+              [class.sidebar__label--hidden]="isCollapsed()"
+            >
+              {{ item.label }}
+            </span>
+          </a>
+        </li>
+      }
+    </ul>
+  </nav>
 
-                    <li>
-                        <a routerLink="/dashboard/orders" routerLinkActive="active"
-                            class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-300 transition hover:bg-slate-800 hover:text-white">
-                            <span>Orders</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a routerLink="/dashboard/users" routerLinkActive="active"
-                            class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-300 transition hover:bg-slate-800 hover:text-white">
-                            <span>Users</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <div>
-                <p class="px-3 mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Management
-                </p>
-
-                <ul class="space-y-2">
-                    <li>
-                        <a routerLink="/dashboard/categories" routerLinkActive="active"
-                            class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-300 transition hover:bg-slate-800 hover:text-white">
-                            <span>Categories</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#"
-                            class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-300 transition hover:bg-slate-800 hover:text-white">
-                            <span>Analytics</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#"
-                            class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-300 transition hover:bg-slate-800 hover:text-white">
-                            <span>Settings</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </aside>
-
-    <main class="flex-1 bg-slate-100 p-8">
-        <router-outlet></router-outlet>
-    </main>
-</div>
+  <div class="sidebar__footer">
+    <button type="button" class="sidebar__logout" (click)="logout()">
+      <span class="material-symbols-outlined sidebar__icon">logout</span>
+      <span
+        class="sidebar__label"
+        [class.sidebar__label--hidden]="isCollapsed()"
+      >
+        Logout
+      </span>
+    </button>
+  </div>
+</aside>

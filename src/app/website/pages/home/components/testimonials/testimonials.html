@@ -1,0 +1,25 @@
+<!-- website/pages/home/components/testimonials/testimonials.html -->
+@if (shouldRenderSection()) {
+<section class="home-section relative">
+  <div class="absolute inset-0 z-0">
+    <div class="h-full w-full bg-gradient-to-br from-primary-fixed/20 to-transparent"></div>
+  </div>
+
+  <div class="home-shell relative z-10 mb-xl">
+    <app-section-header [align]="'center'" [description]="section().header.description"
+      [title]="section().header.title" />
+  </div>
+
+  <div class="home-shell relative z-10 grid grid-cols-1 gap-lg md:grid-cols-3">
+    @if (isLoading()) {
+    @for (item of skeletonCards; track item) {
+    <app-testimonial-skeleton />
+    }
+    } @else {
+    @for (testimonial of testimonialsView(); track testimonial.id) {
+    <app-testimonial-card [testimonial]="testimonial" />
+    }
+    }
+  </div>
+</section>
+}

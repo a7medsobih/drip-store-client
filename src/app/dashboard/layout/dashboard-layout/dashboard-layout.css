@@ -1,1 +1,43 @@
 
+:host {
+  display: block;
+  min-height: 100vh;
+  background: var(--color-background);
+  color: var(--color-on-surface);
+}
+
+.dashboard-layout {
+  min-height: 100vh;
+}
+
+.dashboard-layout__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  border: 0;
+  background: rgb(0 0 0 / 0.45);
+}
+
+.dashboard-layout__content {
+  min-height: 100vh;
+  transition: margin-left 300ms ease;
+}
+
+.dashboard-layout__body {
+  min-height: calc(100vh - 73px);
+  padding: var(--spacing-lg);
+}
+
+@media (min-width: 768px) {
+  .dashboard-layout__content {
+    margin-left: 240px;
+  }
+
+  .dashboard-layout__content--collapsed {
+    margin-left: 64px;
+  }
+
+  .dashboard-layout__body {
+    padding: var(--spacing-xl);
+  }
+}

@@ -1,62 +1,113 @@
-<nav class="bg-white shadow-sm border-b border-gray-200">
-    <div class="container mx-auto px-6">
-        <div class="flex items-center justify-between h-20">
+<header class="fixed top-0 left-0 z-50 w-full border-b border-white/30 bg-white/70 backdrop-blur-2xl shadow-xl">
+    <nav class="relative mx-auto flex items-center justify-between px-6 py-3">
+        <a routerLink="/"
+            class="font-display text-xl font-semibold tracking-tight text-primary transition hover:opacity-80 md:text-3xl">
+            DRIP STORE
+        </a>
 
-            <div class="flex items-center gap-2">
-                <div
-                    class="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold text-lg">
-                    D
+        <div class="hidden items-center gap-8 md:flex">
+            <a href="#" class="nav-link active">Collections</a>
+            <a href="#" class="nav-link">New Arrivals</a>
+            <a href="#" class="nav-link">Sustainability</a>
+            <a href="#" class="nav-link">Journal</a>
+        </div>
+
+        <div class="flex items-center gap-2 md:gap-3">
+            <button type="button" class="icon-btn" aria-label="Search">
+                <lucide-angular [img]="Search" size="20"></lucide-angular>
+            </button>
+
+            <button type="button" class="icon-btn relative" aria-label="Cart">
+                <lucide-angular [img]="ShoppingBag" size="20"></lucide-angular>
+                <span
+                    class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] text-white">
+                    2
+                </span>
+            </button>
+
+            @if (authService.isAuthenticated()) {
+                <div class="navbar-auth hidden items-center gap-2 md:flex">
+                    @if (authService.isAdmin()) {
+                        <a routerLink="/dashboard" class="home-btn home-btn--outline navbar-dashboard-link">
+                            Dashboard
+                        </a>
+                    }
+
+                    <a routerLink="/profile" class="navbar-user-link" aria-label="Profile">
+                        <span class="navbar-avatar">{{ userInitial() }}</span>
+                        <span class="navbar-user-name">{{ displayName() }}</span>
+                    </a>
+
+                    <button type="button" class="icon-btn" (click)="logout()" aria-label="Logout">
+                        <lucide-angular [img]="LogOut" size="18"></lucide-angular>
+                    </button>
                 </div>
-                <h1 class="text-2xl font-bold text-slate-900">Drip Store</h1>
-            </div>
+            } @else {
+                <div class="navbar-auth hidden items-center gap-2 md:flex">
+                    <a routerLink="/login" class="home-btn home-btn--ghost navbar-auth-link">Login</a>
+                    <a routerLink="/register" class="home-btn home-btn--primary navbar-auth-link">Register</a>
+                </div>
+            }
 
-            <ul class="hidden md:flex items-center gap-8 text-gray-700 font-medium">
-                <li>
-                    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
-                        class="hover:text-slate-900 transition">Home</a>
-                </li>
-                <li>
-                    <a routerLink="/products" routerLinkActive="active"
-                        class="hover:text-slate-900 transition">Products</a>
-                </li>
-                <li>
-                    <a routerLink="#" class="hover:text-slate-900 transition">Categories</a>
-                </li>
-                <li>
-                    <a routerLink="#" class="hover:text-slate-900 transition">About</a>
-                </li>
-                <li>
-                    <a routerLink="#" class="hover:text-slate-900 transition">Contact</a>
-                </li>
-            </ul>
+            <button
+                type="button"
+                class="icon-btn md:hidden"
+                (click)="toggleMobileMenu()"
+                [attr.aria-expanded]="isMobileMenuOpen()"
+                aria-label="Toggle menu"
+            >
+                <lucide-angular [img]="isMobileMenuOpen() ? X : Menu" size="20"></lucide-angular>
+            </button>
+        </div>
+    </nav>
 
-            <div class="hidden lg:flex items-center relative">
-                <input type="text" placeholder="Search products..."
-                    class="w-72 pl-4 pr-10 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-slate-900" />
-                <span class="absolute right-3 text-gray-400">Search</span>
-            </div>
+    @if (isMobileMenuOpen()) {
+        <div class="navbar-mobile-panel border-t border-white/30 px-6 py-4 md:hidden">
+            <div class="flex flex-col gap-3">
+                @if (authService.isAuthenticated()) {
+                    <a
+                        routerLink="/profile"
+                        class="navbar-mobile-user"
+                        (click)="closeMobileMenu()"
+                    >
+                        <span class="navbar-avatar">{{ userInitial() }}</span>
+                        <span>
+                            <span class="block font-label-caps text-label-caps text-primary">Signed in</span>
+                            <span class="font-body-md text-body-md text-on-surface">{{ displayName() }}</span>
+                        </span>
+                    </a>
 
-            <div class="flex items-center gap-5 text-xl">
-                <button class="relative hover:text-slate-900 transition">
-                    Wishlist
-                    <span
-                        class="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
-                        2
-                    </span>
-                </button>
+                    @if (authService.isAdmin()) {
+                        <a
+                            routerLink="/dashboard"
+                            class="home-btn home-btn--outline w-full justify-center"
+                            (click)="closeMobileMenu()"
+                        >
+                            <lucide-angular [img]="LayoutDashboard" size="16" class="mr-2 inline-block"></lucide-angular>
+                            Dashboard
+                        </a>
+                    }
 
-                <button class="relative hover:text-slate-900 transition">
-                    Cart
-                    <span
-                        class="absolute -top-2 -right-2 bg-slate-900 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
-                        3
-                    </span>
-                </button>
-
-                <button class="hover:text-slate-900 transition">
-                    <a routerLink="/login" routerLinkActive="active">Login</a>
-                </button>
+                    <button type="button" class="home-btn home-btn--ghost w-full" (click)="logout()">
+                        Logout
+                    </button>
+                } @else {
+                    <a
+                        routerLink="/login"
+                        class="home-btn home-btn--ghost w-full text-center"
+                        (click)="closeMobileMenu()"
+                    >
+                        Login
+                    </a>
+                    <a
+                        routerLink="/register"
+                        class="home-btn home-btn--primary w-full text-center"
+                        (click)="closeMobileMenu()"
+                    >
+                        Register
+                    </a>
+                }
             </div>
         </div>
-    </div>
-</nav>
+    }
+</header>

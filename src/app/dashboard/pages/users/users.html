@@ -1,1 +1,88 @@
-<p>users works!</p>
+<app-dashboard-page-header
+  title="Users"
+  subtitle="View registered users and manage account access."
+></app-dashboard-page-header>
+
+@if (toast()) {
+  <div
+    class="fixed right-lg top-lg z-50 rounded-2xl border border-outline-variant/40 bg-surface-container-highest px-md py-sm text-body-sm text-on-surface shadow-xl"
+    role="status"
+  >
+    {{ toast() }}
+  </div>
+}
+
+@if (loading()) {
+  <app-dashboard-table-skeleton [rows]="6"></app-dashboard-table-skeleton>
+} @else if (error()) {
+  <div class="rounded-3xl border border-error/30 bg-error-container/20 p-lg">
+    <p class="text-body-md text-on-error-container">{{ error() }}</p>
+    <button class="mt-md home-btn home-btn--primary" type="button" (click)="fetchUsers()">
+      Retry
+    </button>
+  </div>
+} @else {
+  <section class="glass-card rounded-3xl p-lg">
+    <div class="mb-lg">
+      <input
+        class="w-full rounded-2xl border border-outline-variant/40 bg-surface-container-low px-md py-sm text-body-md text-on-surface outline-none focus:border-primary md:max-w-md"
+        type="search"
+        placeholder="Search by name, email, or mobile..."
+        [ngModel]="search()"
+        (ngModelChange)="search.set($event)"
+      />
+    </div>
+
+    <app-dashboard-table
+      [columns]="columns"
+      [rows]="tableRows()"
+      [cellTemplate]="cell"
+      emptyMessage="No users found."
+    >
+      <ng-template #cell let-row let-key="key" let-value="value">
+        @if (key === 'status') {
+          <app-dashboard-badge [status]="value === 'active' ? 'active' : 'inactive'"></app-dashboard-badge>
+        } @else if (key === 'actions') {
+          <div class="flex justify-end" (click)="$event.stopPropagation()">
+            @if (asUser(row); as user) {
+              <button
+                type="button"
+                class="home-btn home-btn--ghost px-md py-xs"
+                [disabled]="togglingId() === user._id"
+                (click)="toggleActive(user, $event)"
+              >
+                {{ user.isActive ? 'Deactivate' : 'Activate' }}
+              </button>
+            }
+          </div>
+        } @else {
+          <span class="text-body-sm text-on-surface">{{ value }}</span>
+        }
+      </ng-template>
+    </app-dashboard-table>
+
+    <div class="mt-lg flex flex-wrap items-center justify-between gap-md">
+      <p class="text-body-sm text-on-surface-variant/80">
+        Page {{ currentPage() }} of {{ totalPages() }} · {{ totalItems() }} users
+      </p>
+      <div class="flex items-center gap-sm">
+        <button
+          type="button"
+          class="home-btn home-btn--ghost"
+          (click)="previousPage()"
+          [disabled]="currentPage() === 1"
+        >
+          Previous
+        </button>
+        <button
+          type="button"
+          class="home-btn home-btn--primary"
+          (click)="nextPage()"
+          [disabled]="currentPage() === totalPages()"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </section>
+}

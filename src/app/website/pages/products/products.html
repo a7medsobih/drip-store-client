@@ -1,1 +1,100 @@
-<p>products works!</p>
+<!-- website/pages/products/products.html -->
+<main class="max-w-container-max mx-auto pt-[120px] pb-xxl px-lg flex flex-col md:flex-row gap-gutter">
+    <aside class="w-full md:w-64 shrink-0">
+        <div class="glass-card rounded-xl p-md sticky top-[100px]">
+            <div class="space-y-lg">
+                <div>
+                    <h3 class="font-label-caps text-label-caps text-on-surface-variant mb-md">Categories</h3>
+                    <div class="flex flex-col space-y-sm">
+                        @for (category of categoryOptions(); track category.value) {
+                        <label class="flex items-center space-x-sm cursor-pointer group">
+                            <input class="rounded-sm border-outline-variant text-primary focus:ring-primary-container"
+                                type="checkbox" [checked]="selectedCategoryId() === category.value"
+                                (change)="onCategoryChange(category.value)" />
+                            <span [class]="categoryTextClass(category.value)">
+                                {{ category.label }}
+                            </span>
+                        </label>
+                        }
+
+                        @if (!loading() && categoryOptions().length === 0) {
+                        <p class="font-body-sm text-body-sm text-on-surface-variant">No categories available.</p>
+                        }
+                    </div>
+                </div>
+                <div class="pt-md border-t border-outline-variant/20">
+                    <h3 class="font-label-caps text-label-caps text-on-surface-variant mb-md">Price Range</h3>
+                    <input class="w-full h-1 bg-surface-container accent-primary cursor-pointer rounded-lg"
+                        [value]="maxPrice()" max="50000" min="0" step="100" type="range"
+                        (input)="onMaxPriceChange($event)" />
+                    <div class="flex justify-between mt-sm">
+                        <span class="font-label-caps text-[10px] text-on-surface-variant/60">{{ minPrice() }} EGP</span>
+                        <span class="font-label-caps text-[10px] text-on-surface-variant/60">{{ maxPrice() }} EGP</span>
+                    </div>
+                </div>
+                <div class="pt-md border-t border-outline-variant/20">
+                    <h3 class="font-label-caps text-label-caps text-on-surface-variant mb-md">Search</h3>
+                    <div class="relative">
+                        <input
+                            class="w-full bg-surface-container-low border-none rounded-full py-xs px-md text-body-sm focus:ring-1 focus:ring-primary"
+                            placeholder="Find an item..." type="text" [value]="searchTerm()"
+                            (input)="onSearchInput($event)" />
+                        <span
+                            class="material-symbols-outlined absolute right-3 top-1.5 text-on-surface-variant/50 text-[18px]">search</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <section class="flex-1">
+        <header class="mb-xl">
+            <h2 class="font-display-lg text-display-lg text-primary mb-md">Shop All</h2>
+            <div class="flex flex-wrap gap-sm">
+                <button [class]="clearFiltersButtonClass()" type="button" (click)="clearFilters()">All Items</button>
+                <select [class]="sortSelectClass" [value]="sort()" (change)="onSortChange($event)">
+                    @for (option of sortOptions; track option.value) {
+                    <option [value]="option.value">{{ option.label }}</option>
+                    }
+                </select>
+            </div>
+        </header>
+        <div [class]="productsContainerClass()">
+            @if (loading() && products().length === 0) {
+            <p class="col-span-full text-center font-body-sm text-on-surface-variant">Loading products...</p>
+            }
+
+            @if (!loading() && products().length === 0) {
+            <p class="col-span-full text-center font-body-sm text-on-surface-variant">No products found.</p>
+            }
+
+            @for (product of products(); track product._id) {
+            <div class="group cursor-pointer">
+                <div class="glass-card rounded-xl overflow-hidden aspect-[3/4] mb-md relative">
+                    <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        [src]="environment.baseURL + product.image" [alt]="product.name" />
+                    <button
+                        class="absolute bottom-md left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white/90 backdrop-blur-md px-lg py-sm rounded-full font-label-caps text-label-caps text-primary shadow-lg"
+                        type="button">Quick View</button>
+                </div>
+                <div class="space-y-xs text-center">
+                    <p class="font-label-caps text-label-caps text-on-surface-variant/60 uppercase tracking-widest">
+                        {{ product.categoryId.name }}
+                    </p>
+                    <h4 class="font-body-md text-on-surface group-hover:text-primary transition-colors">{{ product.name
+                        }}</h4>
+                    <p class="font-body-sm font-semibold text-primary">{{ product.price }} EGP</p>
+                </div>
+            </div>
+            }
+        </div>
+        @if (hasMore()) {
+        <div class="mt-xxl flex justify-center">
+            <button
+                class="glass-card px-xxl py-md rounded-full font-label-caps text-label-caps text-primary hover:bg-primary hover:text-on-primary transition-all duration-500"
+                type="button" [disabled]="loading()" (click)="loadMore()">
+                {{ loading() ? 'Loading...' : 'Load More Items' }}
+            </button>
+        </div>
+        }
+    </section>
+</main>

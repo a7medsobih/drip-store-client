@@ -1,4 +1,45 @@
-<h1 class="text-3xl font-bold text-slate-900">Dashboard</h1>
-<p class="text-slate-500 mt-2">
-    Welcome back to Drip Store admin panel.
-</p>
+<app-dashboard-page-header
+  title="Overview"
+  subtitle="Track your key numbers and recent orders in one place."
+></app-dashboard-page-header>
+
+@if (loading()) {
+  <app-dashboard-stat-card-skeleton></app-dashboard-stat-card-skeleton>
+  <app-dashboard-table-skeleton [rows]="5"></app-dashboard-table-skeleton>
+} @else if (error()) {
+  <app-dashboard-empty-state
+    [message]="error()!"
+    actionLabel="Retry"
+    (actionClick)="fetchOverview()"
+  ></app-dashboard-empty-state>
+} @else {
+  <section class="grid grid-cols-1 gap-lg sm:grid-cols-2 xl:grid-cols-5">
+    @for (card of statCards(); track card.title) {
+      <app-stat-card
+        [title]="card.title"
+        [value]="card.value"
+        [icon]="card.icon"
+        [color]="card.color"
+      ></app-stat-card>
+    }
+  </section>
+
+  <section class="rounded-3xl border border-white/10 bg-[#141414]/90 p-lg">
+    <h3 class="mb-md font-headline-sm text-headline-sm text-primary">Recent Orders</h3>
+
+    <app-dashboard-table
+      [columns]="recentOrdersColumns"
+      [rows]="recentOrdersRows()"
+      [loading]="loading()"
+      emptyMessage="No recent orders found."
+      (rowClick)="onOrdersRowClick($event)"
+    >
+    </app-dashboard-table>
+  </section>
+
+  <section class="grid grid-cols-1 gap-lg lg:grid-cols-2">
+    @for (action of quickActions(); track action.id) {
+      <app-quick-action-card [action]="action"></app-quick-action-card>
+    }
+  </section>
+}

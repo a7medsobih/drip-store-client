@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
 
 import { Home } from './home';
+import { ProductService } from '../../../core/services/product.service';
+import { TestimonialService } from '../../../core/services/testimonial.service';
 
 describe('Home', () => {
   let component: Home;
@@ -9,6 +12,21 @@ describe('Home', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [Home],
+      providers: [
+        {
+          provide: ProductService,
+          useValue: {
+            getNewArrivals: () => of([]),
+            getBestSellers: () => of([]),
+          },
+        },
+        {
+          provide: TestimonialService,
+          useValue: {
+            getPublicTestimonials: () => of([]),
+          },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Home);

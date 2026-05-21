@@ -1,0 +1,45 @@
+<section class="glass-card rounded-3xl p-lg" [class]="panelClass()">
+  @if (eyebrow() || title() || description() || actionLabel()) {
+    <header class="mb-lg flex items-start justify-between gap-md">
+      <div class="space-y-xs">
+        @if (eyebrow()) {
+          <p class="font-label-caps text-label-caps text-on-surface-variant/70">
+            {{ eyebrow() }}
+          </p>
+        }
+
+        @if (title()) {
+          <h3 class="font-headline-sm text-headline-sm text-primary">
+            {{ title() }}
+          </h3>
+        }
+
+        @if (description()) {
+          <p class="text-body-sm text-on-surface-variant/80">
+            {{ description() }}
+          </p>
+        }
+      </div>
+
+      @if (actionLabel()) {
+        @if (actionRoute()) {
+          <a
+            [routerLink]="actionRoute()"
+            class="font-label-caps text-label-caps text-primary transition hover:opacity-80"
+          >
+            {{ actionLabel() }}
+          </a>
+        } @else {
+          <button
+            type="button"
+            class="font-label-caps text-label-caps text-primary transition hover:opacity-80"
+          >
+            {{ actionLabel() }}
+          </button>
+        }
+      }
+    </header>
+  }
+
+  <ng-content></ng-content>
+</section>

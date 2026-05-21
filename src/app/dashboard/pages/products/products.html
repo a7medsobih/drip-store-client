@@ -1,1 +1,288 @@
-<p>products works!</p>
+<app-dashboard-page-header
+  title="Products"
+  subtitle="Manage inventory, stock levels, and product status."
+  actionLabel="Add Product"
+  (actionClick)="openCreateModal()"
+></app-dashboard-page-header>
+
+@if (toast()) {
+  <div
+    class="fixed right-lg top-lg z-50 rounded-2xl border border-outline-variant/40 bg-surface-container-highest px-md py-sm text-body-sm text-on-surface shadow-xl"
+    role="status"
+  >
+    {{ toast() }}
+  </div>
+}
+
+@if (loading()) {
+  <app-dashboard-table-skeleton [rows]="6"></app-dashboard-table-skeleton>
+} @else if (error()) {
+  <div class="rounded-3xl border border-error/30 bg-error-container/20 p-lg">
+    <p class="text-body-md text-on-error-container">{{ error() }}</p>
+    <button class="mt-md home-btn home-btn--primary" type="button" (click)="fetchProducts()">
+      Retry
+    </button>
+  </div>
+} @else {
+  <section class="glass-card rounded-3xl p-lg">
+    <div class="mb-lg grid grid-cols-1 gap-md lg:grid-cols-4">
+      <input
+        class="rounded-2xl border border-outline-variant/40 bg-surface-container-low px-md py-sm text-body-md text-on-surface outline-none focus:border-primary"
+        type="text"
+        placeholder="Search products..."
+        [ngModel]="searchText()"
+        (ngModelChange)="searchText.set($event)"
+      />
+
+      <select
+        class="rounded-2xl border border-outline-variant/40 bg-surface-container-low px-md py-sm text-body-md text-on-surface outline-none focus:border-primary"
+        [ngModel]="filters().categoryId"
+        (ngModelChange)="filters.set({ ...filters(), categoryId: $event })"
+      >
+        <option value="">All Categories</option>
+        @for (category of categories(); track category.id) {
+          <option [value]="category.id">{{ category.name }}</option>
+        }
+      </select>
+
+      <select
+        class="rounded-2xl border border-outline-variant/40 bg-surface-container-low px-md py-sm text-body-md text-on-surface outline-none focus:border-primary"
+        [ngModel]="filters().isActive"
+        (ngModelChange)="filters.set({ ...filters(), isActive: $event })"
+      >
+        <option value="">All Status</option>
+        <option value="true">Active</option>
+        <option value="false">Inactive</option>
+      </select>
+
+      <button type="button" class="home-btn home-btn--primary" (click)="applyFilters()">
+        Apply Filters
+      </button>
+    </div>
+
+    <app-dashboard-table
+      [columns]="columns"
+      [rows]="tableRows()"
+      [loading]="loading()"
+      [cellTemplate]="cell"
+      emptyMessage="No products found."
+      (rowClick)="asProduct($event) ? openEditModal(asProduct($event)!) : null"
+    >
+      <ng-template #cell let-row let-key="key" let-value="value">
+        @if (key === 'image') {
+          <img
+            [src]="asText(value)"
+            alt="Product image"
+            class="h-10 w-10 rounded-xl object-cover"
+          />
+        } @else if (key === 'stock') {
+          @if (asNumber(value) === 0) {
+            <app-dashboard-badge label="Out of Stock" tone="danger"></app-dashboard-badge>
+          } @else if (asNumber(value) <= 3) {
+            <span class="text-body-sm text-error">{{ value }}</span>
+          } @else {
+            <span class="text-body-sm text-on-surface">{{ value }}</span>
+          }
+        } @else if (key === 'active') {
+          <label class="inline-flex cursor-pointer items-center gap-xs" (click)="$event.stopPropagation()">
+            <input
+              type="checkbox"
+              class="h-4 w-4 accent-primary"
+              [checked]="!!value"
+              (change)="asProduct(row) ? toggleProduct(asProduct(row)!, $event) : null"
+            />
+          </label>
+        } @else if (key === 'actions') {
+          <div class="flex items-center justify-end gap-sm" (click)="$event.stopPropagation()">
+            <button
+              type="button"
+              class="text-primary transition hover:opacity-80"
+              (click)="asProduct(row) ? openEditModal(asProduct(row)!) : null"
+            >
+              <span class="material-symbols-outlined">edit</span>
+            </button>
+            <button
+              type="button"
+              class="text-error transition hover:opacity-80"
+              (click)="asProduct(row) ? deleteProduct(asProduct(row)!, $event) : null"
+            >
+              <span class="material-symbols-outlined">delete</span>
+            </button>
+          </div>
+        } @else {
+          <span class="text-body-sm text-on-surface">{{ value }}</span>
+        }
+      </ng-template>
+    </app-dashboard-table>
+
+    <div class="mt-lg flex flex-wrap items-center justify-between gap-md">
+      <p class="text-body-sm text-on-surface-variant/80">
+        Page {{ currentPage() }} of {{ totalPages() }} · {{ totalItems() }} products
+      </p>
+      <div class="flex items-center gap-sm">
+        <button
+          type="button"
+          class="home-btn home-btn--ghost"
+          (click)="previousPage()"
+          [disabled]="currentPage() === 1"
+        >
+          Previous
+        </button>
+        <button
+          type="button"
+          class="home-btn home-btn--primary"
+          (click)="nextPage()"
+          [disabled]="currentPage() === totalPages()"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </section>
+}
+
+@if (showForm()) {
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center bg-inverse-surface/60 p-md"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div
+      class="glass-card max-h-[90vh] w-full max-w-content overflow-y-auto rounded-3xl p-lg md:p-xl"
+    >
+      <div class="mb-lg flex items-center justify-between gap-md">
+        <h3 class="font-headline-sm text-headline-sm text-primary">
+          {{ selectedProduct() ? 'Edit Product' : 'Add Product' }}
+        </h3>
+        <button
+          type="button"
+          class="font-label-caps text-label-caps text-on-surface-variant transition hover:opacity-80"
+          (click)="closeForm()"
+        >
+          Close
+        </button>
+      </div>
+
+      @if (submitting()) {
+        <app-dashboard-form-skeleton></app-dashboard-form-skeleton>
+      } @else {
+        <form class="grid grid-cols-1 gap-md md:grid-cols-2" (ngSubmit)="saveProduct()">
+          <label class="space-y-xs md:col-span-2">
+            <span class="font-label-caps text-label-caps text-on-surface-variant">Name *</span>
+            <input
+              class="w-full rounded-2xl border border-outline-variant/40 bg-surface-container-low px-md py-sm text-body-md text-on-surface outline-none focus:border-primary"
+              type="text"
+              [ngModel]="form().name"
+              name="name"
+              (ngModelChange)="form.set({ ...form(), name: $event })"
+            />
+          </label>
+
+          <label class="space-y-xs md:col-span-2">
+            <span class="font-label-caps text-label-caps text-on-surface-variant"
+              >Description *</span
+            >
+            <textarea
+              class="w-full rounded-2xl border border-outline-variant/40 bg-surface-container-low px-md py-sm text-body-md text-on-surface outline-none focus:border-primary"
+              rows="3"
+              [ngModel]="form().description"
+              name="description"
+              (ngModelChange)="form.set({ ...form(), description: $event })"
+            ></textarea>
+          </label>
+
+          <label class="space-y-xs">
+            <span class="font-label-caps text-label-caps text-on-surface-variant">Price *</span>
+            <input
+              class="w-full rounded-2xl border border-outline-variant/40 bg-surface-container-low px-md py-sm text-body-md text-on-surface outline-none focus:border-primary"
+              type="number"
+              min="0"
+              [ngModel]="form().price"
+              name="price"
+              (ngModelChange)="form.set({ ...form(), price: $event ? +$event : null })"
+            />
+          </label>
+
+          <label class="space-y-xs">
+            <span class="font-label-caps text-label-caps text-on-surface-variant">Stock *</span>
+            <input
+              class="w-full rounded-2xl border border-outline-variant/40 bg-surface-container-low px-md py-sm text-body-md text-on-surface outline-none focus:border-primary"
+              type="number"
+              min="0"
+              [ngModel]="form().stock"
+              name="stock"
+              (ngModelChange)="form.set({ ...form(), stock: $event ? +$event : null })"
+            />
+          </label>
+
+          <label class="space-y-xs">
+            <span class="font-label-caps text-label-caps text-on-surface-variant">Category *</span>
+            <select
+              class="w-full rounded-2xl border border-outline-variant/40 bg-surface-container-low px-md py-sm text-body-md text-on-surface outline-none focus:border-primary"
+              [ngModel]="form().categoryId"
+              name="categoryId"
+              (ngModelChange)="onCategoryChange($event)"
+            >
+              <option value="">Select category</option>
+              @for (category of categories(); track category.id) {
+                <option [value]="category.id">{{ category.name }}</option>
+              }
+            </select>
+          </label>
+
+          <label class="space-y-xs">
+            <span class="font-label-caps text-label-caps text-on-surface-variant"
+              >Subcategory *</span
+            >
+            <select
+              class="w-full rounded-2xl border border-outline-variant/40 bg-surface-container-low px-md py-sm text-body-md text-on-surface outline-none focus:border-primary disabled:opacity-60"
+              [disabled]="!form().categoryId || loadingSubcategories()"
+              [ngModel]="form().subCategoryId"
+              name="subCategoryId"
+              (ngModelChange)="form.set({ ...form(), subCategoryId: $event })"
+            >
+              <option value="">Select subcategory</option>
+              @for (subcategory of formSubcategories(); track subcategory.id) {
+                <option [value]="subcategory.id">{{ subcategory.name }}</option>
+              }
+            </select>
+          </label>
+
+          <label class="space-y-xs md:col-span-2">
+            <span class="font-label-caps text-label-caps text-on-surface-variant">
+              Image {{ selectedProduct() ? '' : '*' }}
+            </span>
+            <input type="file" accept="image/*" (change)="onImageSelected($event)" />
+            @if (imagePreview()) {
+              <img
+                [src]="imagePreview()"
+                alt="Preview"
+                class="mt-sm h-28 w-28 rounded-2xl object-cover"
+              />
+            }
+          </label>
+
+          <label class="inline-flex items-center gap-sm md:col-span-2">
+            <input
+              type="checkbox"
+              class="h-4 w-4 accent-primary"
+              [ngModel]="form().isActive"
+              name="isActive"
+              (ngModelChange)="form.set({ ...form(), isActive: !!$event })"
+            />
+            <span class="text-body-sm text-on-surface">Active product</span>
+          </label>
+
+          <div class="flex flex-wrap items-center justify-end gap-sm md:col-span-2">
+            <button type="button" class="home-btn home-btn--ghost" (click)="closeForm()">
+              Cancel
+            </button>
+            <button type="submit" class="home-btn home-btn--primary">
+              {{ selectedProduct() ? 'Update Product' : 'Create Product' }}
+            </button>
+          </div>
+        </form>
+      }
+    </div>
+  </div>
+}

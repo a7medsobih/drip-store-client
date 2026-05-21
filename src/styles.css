@@ -1,3 +1,237 @@
-/* You can add global styles to this file, and also import other style files */
-
+/* Styles */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Geist:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
 @import 'tailwindcss';
+
+@theme {
+    --color-primary-fixed: #e6e3d4;
+    --color-surface-bright: #f9f9f9;
+    --color-on-primary-fixed-variant: #48473d;
+    --color-secondary-fixed-dim: #c5c7c8;
+    --color-on-secondary: #ffffff;
+    --color-tertiary-fixed: #e2e2e2;
+    --color-primary-container: #777569;
+    --color-on-secondary-fixed: #191c1d;
+    --color-tertiary-fixed-dim: #c6c6c7;
+    --color-secondary-container: #e1e3e4;
+    --color-on-surface: #1a1c1c;
+    --color-surface-container-highest: #e2e2e2;
+    --color-error: #ba1a1a;
+    --color-surface: #f9f9f9;
+    --color-secondary-fixed: #e1e3e4;
+    --color-on-secondary-fixed-variant: #454748;
+    --color-on-primary-container: #fffbff;
+    --color-on-error-container: #93000a;
+    --color-surface-container-lowest: #ffffff;
+    --color-surface-container-high: #e8e8e8;
+    --color-error-container: #ffdad6;
+    --color-inverse-on-surface: #f1f1f1;
+    --color-surface-container: #eeeeee;
+    --color-tertiary: #5a5c5c;
+    --color-on-tertiary-fixed-variant: #454747;
+    --color-background: #f9f9f9;
+    --color-surface-dim: #dadada;
+    --color-inverse-surface: #2f3131;
+    --color-on-tertiary: #ffffff;
+    --color-surface-container-low: #f4f3f3;
+    --color-surface-tint: #605f53;
+    --color-on-primary-fixed: #1c1c13;
+    --color-outline-variant: #cac6bc;
+    --color-on-background: #1a1c1c;
+    --color-on-surface-variant: #48473f;
+    --color-tertiary-container: #737575;
+    --color-surface-variant: #e2e2e2;
+    --color-on-secondary-container: #626566;
+    --color-outline: #79776e;
+    --color-primary: #5e5c51;
+    --color-on-error: #ffffff;
+    --color-primary-fixed-dim: #cac7b9;
+    --color-inverse-primary: #cac7b9;
+    --color-secondary: #5c5f60;
+    --color-on-primary: #ffffff;
+    --color-on-tertiary-container: #fcfcfc;
+    --color-on-tertiary-fixed: #1a1c1c;
+
+    --spacing-unit: 4px;
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 40px;
+    --spacing-xxl: 80px;
+    --spacing-gutter: 24px;
+    --spacing-container-max: 1280px;
+
+    /* Layout widths — max-w-{size} uses --spacing-{size} when set; keep layout tokens separate from spacing scale */
+    --max-width-content: 36rem;
+    --max-width-copy: 28rem;
+
+    --font-label-caps: 'Geist', sans-serif;
+    --font-body-sm: 'Geist', sans-serif;
+    --font-body-md: 'Geist', sans-serif;
+    --font-display-lg-mobile: 'Playfair Display', serif;
+    --font-body-lg: 'Geist', sans-serif;
+    --font-headline-lg: 'Playfair Display', serif;
+    --font-display-lg: 'Playfair Display', serif;
+    --font-display-md: 'Playfair Display', serif;
+    --font-headline-sm: 'Geist', sans-serif;
+
+    --text-label-caps: 12px;
+    --text-label-caps--line-height: 1.35;
+    --text-label-caps--letter-spacing: 0.1em;
+    --text-label-caps--font-weight: 600;
+    --text-label-caps--text-transform: uppercase;
+
+    --text-body-sm: 14px;
+    --text-body-sm--line-height: 1.5;
+    --text-body-sm--font-weight: 400;
+
+    --text-body-md: 16px;
+    --text-body-md--line-height: 1.6;
+    --text-body-md--font-weight: 400;
+
+    --text-display-lg-mobile: 32px;
+    --text-display-lg-mobile--line-height: 1.25;
+    --text-display-lg-mobile--font-weight: 600;
+
+    --text-body-lg: 18px;
+    --text-body-lg--line-height: 1.6;
+    --text-body-lg--font-weight: 400;
+
+    --text-headline-lg: 28px;
+    --text-headline-lg--line-height: 1.3;
+    --text-headline-lg--font-weight: 500;
+
+    --text-display-lg: 48px;
+    --text-display-lg--line-height: 1.15;
+    --text-display-lg--letter-spacing: -0.02em;
+    --text-display-lg--font-weight: 600;
+
+    --text-display-md: 36px;
+    --text-display-md--line-height: 1.25;
+    --text-display-md--font-weight: 600;
+
+    --text-headline-sm: 20px;
+    --text-headline-sm--line-height: 1.4;
+    --text-headline-sm--font-weight: 600;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background: var(--color-background);
+        color: var(--color-on-surface);
+        font-family: var(--font-body-md);
+    }
+}
+
+.font-display {
+    font-family: 'Playfair Display', serif;
+}
+
+@layer utilities {
+    .text-label-caps {
+        text-transform: uppercase;
+    }
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0;
+}
+
+.material-filled {
+    font-variation-settings: 'FILL' 1;
+}
+
+.home-shell {
+    @apply mx-auto max-w-container-max px-lg;
+}
+
+.home-section {
+    @apply py-xxl;
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
+}
+
+.hero-glass {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.auth-page {
+    @apply min-h-screen overflow-x-hidden bg-background px-md py-lg text-on-surface md:px-lg md:py-xl;
+}
+
+.auth-page__layout {
+    @apply mx-auto grid w-full max-w-6xl items-center gap-lg lg:grid-cols-[1.05fr_0.95fr] lg:gap-xl;
+}
+
+.auth-promo {
+    @apply hidden flex-col justify-between gap-xl rounded-[32px] border border-outline-variant/40 p-lg md:p-xl lg:flex;
+}
+
+@media (width >= 1024px) {
+    .auth-promo {
+        min-height: min(640px, calc(100vh - 96px));
+    }
+}
+
+.auth-feature-card {
+    @apply rounded-3xl border border-outline-variant/25 bg-white/45 p-lg;
+}
+
+.auth-card-header {
+    @apply mb-lg space-y-md;
+}
+
+.auth-card {
+    @apply w-full max-w-content rounded-[32px] p-lg md:p-xl;
+}
+
+.auth-input {
+    @apply w-full rounded-2xl border border-outline-variant/50 bg-surface-container-low px-md py-md font-body-md text-body-md text-on-surface outline-none transition placeholder:text-on-surface-variant/50 focus:border-primary focus:ring-2 focus:ring-primary/15;
+}
+
+.auth-form-actions {
+    @apply flex flex-col-reverse gap-md pt-sm sm:flex-row sm:items-center sm:justify-between;
+}
+
+.home-btn {
+    @apply rounded-full px-xl py-md font-label-caps text-label-caps transition-all duration-300;
+}
+
+.home-btn--primary {
+    @apply bg-primary text-on-primary hover:opacity-90;
+}
+
+.home-btn--ghost {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    @apply text-primary hover:bg-white/40;
+}
+
+.home-btn--outline {
+    @apply border border-primary text-primary hover:bg-primary hover:text-white;
+}
+
+.section-link {
+    @apply border-b border-primary/30 pb-1 font-label-caps text-label-caps text-primary transition-all hover:border-primary;
+}
+
+.home-product-card img {
+    transition: transform 700ms ease;
+}
+
+.home-product-card:hover img {
+    transform: scale(1.05);
+}

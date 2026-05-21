@@ -1,0 +1,21 @@
+<article class="hero-glass rounded-xl p-lg">
+  <app-rating-stars [stars]="testimonial().stars" />
+
+  <p class="mb-lg font-body-md italic text-on-surface">
+    {{ testimonial().quote }}
+  </p>
+
+  <div class="flex items-center gap-md">
+    <div class="h-10 w-10 rounded-full bg-primary-fixed-dim"></div>
+
+    <div>
+      <p class="font-label-caps text-label-caps text-primary">
+        {{ testimonial().authorName }}
+      </p>
+
+      <p class="text-[10px] uppercase text-on-surface-variant">
+        {{ testimonial().authorLocation }}
+      </p>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,3075 @@
+{
+  "info": {
+    "_postman_id": "238498ec-2d21-4e75-b91e-5f50539fe855",
+    "name": "drip_store",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "48781431",
+    "_collection_link": "https://go.postman.co/collection/48781431-238498ec-2d21-4e75-b91e-5f50539fe855?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Ahmed\",\r\n  \"email\": \"admin2@gmail.com\",\r\n  \"password\": \"123456\",\r\n  \"gender\": \"male\",\r\n  \"mobile\": \"01012345125\",\r\n  \"emailConsent\": true,\r\n  \"role\": \"admin\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "register",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"name\": \"Ahmed\",\r\n  \"email\": \"ahmed3@gmail.com\",\r\n  \"password\": \"123456\",\r\n  \"gender\": \"male\",\r\n  \"mobile\": \"01012345612\",\r\n  \"emailConsent\": true\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/auth/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "register"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "364"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"16c-T2GuouyHM76vVsQQ3oKH9iuaPsA\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 05 May 2026 11:44:25 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"User registered successfully\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"69f9d819f1435b5acbef99ef\",\n            \"email\": \"ahmed3@gmail.com\",\n            \"mobile\": \"01012345612\",\n            \"gender\": \"male\",\n            \"name\": \"Ahmed\",\n            \"role\": \"user\",\n            \"emailConsent\": true,\n            \"isActive\": true,\n            \"isVerified\": false,\n            \"createdAt\": \"2026-05-05T11:44:25.905Z\",\n            \"updatedAt\": \"2026-05-05T11:44:25.905Z\"\n        },\n        \"otp\": \"295883\"\n    },\n    \"errors\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"admin@gmail.com\",\r\n    \"password\": \"admin123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "login",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"ahmed@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/auth/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "855"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"357-6d981TGQOM818ImZauNEzDEtpEU\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 05 May 2026 11:48:05 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Login successful\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"69f9d6c40e21279d31905a33\",\n            \"name\": \"Ahmed\",\n            \"email\": \"ahmed@gmail.com\",\n            \"mobile\": \"01012345678\",\n            \"gender\": \"male\",\n            \"role\": \"user\",\n            \"emailConsent\": true,\n            \"isActive\": true,\n            \"isVerified\": false,\n            \"createdAt\": \"2026-05-05T11:38:44.690Z\",\n            \"updatedAt\": \"2026-05-05T11:38:44.690Z\"\n        },\n        \"tokens\": {\n            \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWY5ZDZjNDBlMjEyNzlkMzE5MDVhMzMiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiYWhtZWRAZ21haWwuY29tIiwiaWF0IjoxNzc3OTgxNjg1LCJleHAiOjE3Nzc5ODI1ODV9.JECaHCv1oSAj1-Aak8UgvkfnSKMbKMiLc8TnsejhLpU\",\n            \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWY5ZDZjNDBlMjEyNzlkMzE5MDVhMzMiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiYWhtZWRAZ21haWwuY29tIiwidHlwZSI6InJlZnJlc2giLCJpYXQiOjE3Nzc5ODE2ODUsImV4cCI6MTc3ODU4NjQ4NX0.nmpG7LklwvU__q0ciDGvD0WSa1I15mm7aCMpOu42IRA\"\n        }\n    },\n    \"errors\": null\n}"
+            },
+            {
+              "name": "admin login",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"admin@gmail.com\",\r\n    \"password\": \"admin123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/auth/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "859"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"35b-Negf/CibyphqXuWHBI9rnuLcPOc\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 12 May 2026 08:26:45 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Login successful\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"69fb1932bb41d73e8060fd73\",\n            \"name\": \"Ahmed\",\n            \"email\": \"admin@gmail.com\",\n            \"mobile\": \"01012345123\",\n            \"gender\": \"male\",\n            \"role\": \"admin\",\n            \"emailConsent\": true,\n            \"isActive\": true,\n            \"isVerified\": false,\n            \"createdAt\": \"2026-05-06T10:34:26.436Z\",\n            \"updatedAt\": \"2026-05-12T08:14:02.437Z\"\n        },\n        \"tokens\": {\n            \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWZiMTkzMmJiNDFkNzNlODA2MGZkNzMiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTc3ODU3NDQwNSwiZXhwIjoxNzc4NTc1MzA1fQ.4j7_ZEfTG79nbFKBVei-XLC3FWvUkw1fE69bU8qskRs\",\n            \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWZiMTkzMmJiNDFkNzNlODA2MGZkNzMiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInR5cGUiOiJyZWZyZXNoIiwiaWF0IjoxNzc4NTc0NDA1LCJleHAiOjE3NzkxNzkyMDV9.Qy_o16ZDfRTCuCZQlMTi9vw_wvhGCDWrPZmx9d3z3kU\"\n        }\n    },\n    \"errors\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "forgot-password",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"ahmed1@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/forgot-password",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "forgot-password"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "forgot-password",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"ahmed1@gmail.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/auth/forgot-password",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "forgot-password"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "115"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"73-K1AqPC/uvwjoa+ANL+lWd05hDuI\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 05 May 2026 11:53:21 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"OTP sent successfully\",\n    \"data\": {\n        \"email\": \"ahmed1@gmail.com\",\n        \"otp\": \"798554\"\n    },\n    \"errors\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "verify-otp",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"admin@gmail.com\",\r\n    \"otp\": \"782209\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/verify-otp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "verify-otp"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "verify-otp",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"ahmed1@gmail.com\",\r\n    \"otp\": \"798554\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/auth/verify-otp",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "verify-otp"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "346"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"15a-+u+yx+0FnpS9VihJMtTd0Cer3nw\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 05 May 2026 11:54:43 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"OTP verified successfully\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"69f9d749514c8bf18b3042ce\",\n            \"name\": \"Ahmed\",\n            \"email\": \"ahmed1@gmail.com\",\n            \"mobile\": \"01012345688\",\n            \"gender\": \"male\",\n            \"role\": \"user\",\n            \"emailConsent\": true,\n            \"isActive\": true,\n            \"isVerified\": false,\n            \"createdAt\": \"2026-05-05T11:40:57.608Z\",\n            \"updatedAt\": \"2026-05-05T11:54:43.154Z\"\n        }\n    },\n    \"errors\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "reset-password",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"admin@gmail.com\",\r\n    \"newPassword\": \"admin123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/reset-password",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "reset-password"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "reset-password",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"ahmed1@gmail.com\",\r\n    \"newPassword\": \"123456789\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/auth/reset-password",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "reset-password"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "348"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"15c-Ig3nBSKm9cD8ohG0LzxuhIhM57U\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 06 May 2026 08:19:08 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Password reset successfully\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"69f9d749514c8bf18b3042ce\",\n            \"name\": \"Ahmed\",\n            \"email\": \"ahmed1@gmail.com\",\n            \"mobile\": \"01012345688\",\n            \"gender\": \"male\",\n            \"role\": \"user\",\n            \"emailConsent\": true,\n            \"isActive\": true,\n            \"isVerified\": false,\n            \"createdAt\": \"2026-05-05T11:40:57.608Z\",\n            \"updatedAt\": \"2026-05-06T08:19:08.624Z\"\n        }\n    },\n    \"errors\": null\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "user",
+      "item": [
+        {
+          "name": "profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/user/profile",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "user",
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWY5ZDZjNDBlMjEyNzlkMzE5MDVhMzMiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiYWhtZWRAZ21haWwuY29tIiwiaWF0IjoxNzc4MDU2NDA2LCJleHAiOjE3NzgwNTczMDZ9.TnOksZbcZmFi_q9tpx1mpynNDf1VcnxzEjS9xTP3Ys0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"mohammed\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/user/profile",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "user",
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "address",
+      "item": [
+        {
+          "name": "addresses",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/addresses",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "addresses"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "addresses",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"label\": \"home\",\r\n  \"addressText\": \"6 October Cityyyyyyyyyyyyyyyyyyyyyyyyyy...\",\r\n  \"isDefault\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/addresses",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "addresses"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "addresse",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWY5ZDZjNDBlMjEyNzlkMzE5MDVhMzMiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiYWhtZWRAZ21haWwuY29tIiwiaWF0IjoxNzc4MDU2NjQ2LCJleHAiOjE3NzgwNTc1NDZ9.zFGt5Dw73UgH9UtH6_Hxe4OXsrUBC1CIkGIY2ERTiGs",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"label\": \"home\",\r\n    \"addressText\": \"7 October City...\"   \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/addresses/69fafe925ac755f047fdb0cf",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "addresses",
+                "69fafe925ac755f047fdb0cf"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "addresse",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWY5ZDZjNDBlMjEyNzlkMzE5MDVhMzMiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiYWhtZWRAZ21haWwuY29tIiwiaWF0IjoxNzc4MDU2NjQ2LCJleHAiOjE3NzgwNTc1NDZ9.zFGt5Dw73UgH9UtH6_Hxe4OXsrUBC1CIkGIY2ERTiGs",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"label\": \"home\",\r\n    \"addressText\": \"7 October City...\"   \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/addresses/69fafe925ac755f047fdb0cf",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "addresses",
+                "69fafe925ac755f047fdb0cf"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "categories",
+      "item": [
+        {
+          "name": "categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/categories",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "admin categories",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWZiMTkzMmJiNDFkNzNlODA2MGZkNzMiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTc3ODA2Mzc5NywiZXhwIjoxNzc4MDY0Njk3fQ.CGD1kvEgwAIzUGg7DRNxj7zwOntgBB_CeXioe1FwOMs",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "  { \"title\": \"Sale / Offers\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/v1/categories",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "v1",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "admin categories",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWZiMTkzMmJiNDFkNzNlODA2MGZkNzMiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTc3ODA2Mzc5NywiZXhwIjoxNzc4MDY0Njk3fQ.CGD1kvEgwAIzUGg7DRNxj7zwOntgBB_CeXioe1FwOMs",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "  { \"title\": \"Sale / Offers\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/v1/categories/69fb1c81bb41d73e8060fd7b",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "v1",
+                "categories",
+                "69fb1c81bb41d73e8060fd7b"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "admin categories",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWZiMTkzMmJiNDFkNzNlODA2MGZkNzMiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTc3ODA2Mzc5NywiZXhwIjoxNzc4MDY0Njk3fQ.CGD1kvEgwAIzUGg7DRNxj7zwOntgBB_CeXioe1FwOMs",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "  { \"title\": \"Sale / Offers\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/v1/categories/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "v1",
+                "categories",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "subcategories",
+      "item": [
+        {
+          "name": "subcategories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/subcategories/69fb1c81bb41d73e8060fd7b/subcategories",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "subcategories",
+                "69fb1c81bb41d73e8060fd7b",
+                "subcategories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "admin subcategories",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWZiMTkzMmJiNDFkNzNlODA2MGZkNzMiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTc3ODA2NTAyOCwiZXhwIjoxNzc4MDY1OTI4fQ.cB8ACf4apSQ9Tl6VhKj7pWvJYiSB4WTs8uuKZn2u38g",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "  {\r\n     \"title\": \"Discounts\" ,\r\n     \"categoryId\" : \"69fb1c81bb41d73e8060fd7b\"\r\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/v1/subcategories",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "v1",
+                "subcategories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "admin subcategories",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWZiMTkzMmJiNDFkNzNlODA2MGZkNzMiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTc3ODA2NTAyOCwiZXhwIjoxNzc4MDY1OTI4fQ.cB8ACf4apSQ9Tl6VhKj7pWvJYiSB4WTs8uuKZn2u38g",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \r\n    \"title\": \"Discounts\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/v1/subcategories/69fb1efdbb41d73e8060fd7c",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "v1",
+                "subcategories",
+                "69fb1efdbb41d73e8060fd7c"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "admin subcategorie",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWZiMTkzMmJiNDFkNzNlODA2MGZkNzMiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTc3ODA2Mzc5NywiZXhwIjoxNzc4MDY0Njk3fQ.CGD1kvEgwAIzUGg7DRNxj7zwOntgBB_CeXioe1FwOMs",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "  { \"title\": \"Sale / Offers\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/v1/categories/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "v1",
+                "categories",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "products",
+      "item": [
+        {
+          "name": "products",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/products",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "products",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/products?categoryId=123&minPrice=100&maxPrice=500&search=nike&page=1&limit=10&sort=price_desc",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "products"
+                  ],
+                  "query": [
+                    {
+                      "key": "categoryId",
+                      "value": "123"
+                    },
+                    {
+                      "key": "minPrice",
+                      "value": "100"
+                    },
+                    {
+                      "key": "maxPrice",
+                      "value": "500"
+                    },
+                    {
+                      "key": "search",
+                      "value": "nike"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "price_desc"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "554"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"22a-oBw24oK9sM/YHNGTo1h18b5aVqY\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 07 May 2026 11:04:41 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Products fetched successfully\",\n    \"data\": {\n        \"items\": [\n            {\n                \"_id\": \"69fb2cc5ed35bed40a1922a5\",\n                \"name\": \"Nike Air Max\",\n                \"description\": \"Original running shoes with lightweight design\",\n                \"price\": 2500,\n                \"image\": \"/uploads/products/1778068675328-738981732.jpg\",\n                \"stock\": 12,\n                \"categoryId\": \"69fb1c81bb41d73e8060fd7b\",\n                \"subCategoryId\": \"69fb1efdbb41d73e8060fd7c\",\n                \"isDeleted\": false,\n                \"isActive\": true,\n                \"createdAt\": \"2026-05-06T11:57:57.609Z\",\n                \"updatedAt\": \"2026-05-06T11:57:57.609Z\",\n                \"__v\": 0\n            }\n        ],\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 1,\n            \"totalPages\": 1\n        }\n    },\n    \"errors\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "products best-sellers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products/best-sellers",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products",
+                "best-sellers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "products new-arrivals",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products/best-sellers",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products",
+                "best-sellers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "admin products",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Nike Air Max",
+                  "type": "text",
+                  "uuid": "d8118553-705f-487c-928f-04b7e43ff38f"
+                },
+                {
+                  "key": "description",
+                  "value": "Original running shoes with lightweight design",
+                  "type": "text",
+                  "uuid": "2618eea0-c543-4c64-bcfb-b8a924613b52"
+                },
+                {
+                  "key": "price",
+                  "value": "2500",
+                  "type": "text",
+                  "uuid": "5dc87864-f0f0-454a-bc65-5c2d33002505"
+                },
+                {
+                  "key": "stock",
+                  "value": "12",
+                  "type": "text",
+                  "uuid": "ce70fbfe-63dc-4e03-a0e2-cf3b41a38869"
+                },
+                {
+                  "key": "categoryId",
+                  "value": "69fb1c81bb41d73e8060fd7b",
+                  "type": "text",
+                  "uuid": "cc02a096-053f-4085-89fb-d3e949ceb9fa"
+                },
+                {
+                  "key": "subCategoryId",
+                  "value": "69fb1efdbb41d73e8060fd7c",
+                  "type": "text",
+                  "uuid": "d13b8d21-d5b9-48af-874f-e1cea79486cc"
+                },
+                {
+                  "key": "isActive",
+                  "value": "true",
+                  "type": "text",
+                  "uuid": "db899798-f9f4-4705-9521-bad67d2b4d48"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "uuid": "f36bd731-2dcd-4f6c-b5fc-6e4dbc680d12",
+                  "src": "postman-cloud:///1f1414dc-b09c-4b60-b0de-17e70a5cd7d6"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/v1/products",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "v1",
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "admin products",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Nike Air Max",
+                  "type": "text",
+                  "uuid": "d8118553-705f-487c-928f-04b7e43ff38f"
+                },
+                {
+                  "key": "description",
+                  "value": "Original running shoes with lightweight design",
+                  "type": "text",
+                  "uuid": "2618eea0-c543-4c64-bcfb-b8a924613b52"
+                },
+                {
+                  "key": "price",
+                  "value": "4000",
+                  "type": "text",
+                  "uuid": "5dc87864-f0f0-454a-bc65-5c2d33002505"
+                },
+                {
+                  "key": "stock",
+                  "value": "12",
+                  "type": "text",
+                  "uuid": "ce70fbfe-63dc-4e03-a0e2-cf3b41a38869",
+                  "disabled": true
+                },
+                {
+                  "key": "categoryId",
+                  "value": "69fb1c81bb41d73e8060fd7b",
+                  "type": "text",
+                  "uuid": "cc02a096-053f-4085-89fb-d3e949ceb9fa",
+                  "disabled": true
+                },
+                {
+                  "key": "subCategoryId",
+                  "value": "69fb1efdbb41d73e8060fd7c",
+                  "type": "text",
+                  "uuid": "d13b8d21-d5b9-48af-874f-e1cea79486cc",
+                  "disabled": true
+                },
+                {
+                  "key": "isActive",
+                  "value": "true",
+                  "type": "text",
+                  "uuid": "db899798-f9f4-4705-9521-bad67d2b4d48",
+                  "disabled": true
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "uuid": "f36bd731-2dcd-4f6c-b5fc-6e4dbc680d12",
+                  "src": "postman-cloud:///1f1414dc-b09c-4b60-b0de-17e70a5cd7d6",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/v1/products/69fc707847f65a80b7e42429",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "v1",
+                "products",
+                "69fc707847f65a80b7e42429"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "admin product",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "  { \"title\": \"Sale / Offers\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/v1/products/69fc707847f65a80b7e42429",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "v1",
+                "products",
+                "69fc707847f65a80b7e42429"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "order",
+      "item": [
+        {
+          "name": "order",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/orders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "orders"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "order",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/orders?page=1&limit=10",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "orders"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "149"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"95-jOkx7FkZh+3iGv2r9c69DqqSwKM\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 11 May 2026 11:22:04 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Orders fetched successfully\",\n    \"data\": {\n        \"items\": [],\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 8,\n            \"total\": 0,\n            \"totalPages\": 1\n        }\n    },\n    \"errors\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "order",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"addressId\": \"6a02e5c737e5d5228e77b982\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/orders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "orders"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "order",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"addressId\": \"6a01bfe0b7798c58f4171dec\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/orders",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "orders"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "545"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"221-YrCzUFyBFtxmUENkzfzAbpsPM88\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 11 May 2026 11:39:36 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Order created successfully\",\n    \"data\": {\n        \"userId\": \"69f9d6c40e21279d31905a33\",\n        \"shippingAddress\": {\n            \"label\": \"home\",\n            \"addressText\": \"6 October City...\"\n        },\n        \"totalPrice\": 5000,\n        \"status\": \"pending\",\n        \"items\": [\n            {\n                \"productId\": \"69fb2cc5ed35bed40a1922a5\",\n                \"name\": \"Nike Air Max\",\n                \"image\": \"/uploads/products/1778068675328-738981732.jpg\",\n                \"price\": 2500,\n                \"quantity\": 2,\n                \"totalPrice\": 5000,\n                \"_id\": \"6a01bff5b7798c58f4171dee\"\n            }\n        ],\n        \"_id\": \"6a01bff5b7798c58f4171ded\",\n        \"createdAt\": \"2026-05-11T11:39:33.762Z\",\n        \"updatedAt\": \"2026-05-11T11:39:33.762Z\",\n        \"__v\": 0\n    },\n    \"errors\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "cancel order",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/orders/6a01bff5b7798c58f4171ded/cancel",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "orders",
+                "6a01bff5b7798c58f4171ded",
+                "cancel"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "cancel order",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/orders/:id/cancel",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "orders",
+                    ":id",
+                    "cancel"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": ""
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "72"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"48-EeaRogi+1RQtgIV5v5KhlI9Bz84\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 11 May 2026 11:24:09 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Invalid order id\",\n    \"data\": null,\n    \"errors\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "admin - orders",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/orders/admin?page=1&limit=10&status=pending",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "orders",
+                "admin"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "status",
+                  "value": "pending"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "admin - orders",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/orders/admin?page=1&limit=10&status=pending",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "orders",
+                    "admin"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "status",
+                      "value": "pending"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "154"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"9a-gpSnjA9ztDliweynTTGd7saU8gk\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 11 May 2026 11:27:20 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"All orders fetched successfully\",\n    \"data\": {\n        \"items\": [],\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 0,\n            \"totalPages\": 1\n        }\n    },\n    \"errors\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "admin - update order status",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"status\": \"delivered\"\r\n}\r\n\r\n// pending\r\n// processing\r\n// shipped\r\n// delivered\r\n// cancelled",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/orders/6a02e61937e5d5228e77b984/status",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "orders",
+                "6a02e61937e5d5228e77b984",
+                "status"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "admin - update order status",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"status\": \"processing\"\r\n}\r\n\r\n// pending\r\n// processing\r\n// shipped\r\n// delivered\r\n// cancelled",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/orders/:id/status",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "orders",
+                    ":id",
+                    "status"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": ""
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'none'"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/html; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "163"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 11 May 2026 11:29:03 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "<!DOCTYPE html>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\">\n        <title>Error</title>\n    </head>\n    <body>\n        <pre>Cannot GET /api/v1/orders/:id/status</pre>\n    </body>\n</html>"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cart",
+      "item": [
+        {
+          "name": "cart",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/cart",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cart"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "cart",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"productId\": \"69fb2cc5ed35bed40a1922a5\",\r\n  \"quantity\": 4\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/cart",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cart"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update cart item",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"quantity\": 3\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/cart/:cartItemId",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cart",
+                ":cartItemId"
+              ],
+              "variable": [
+                {
+                  "key": "cartItemId",
+                  "value": "6a01c197b7798c58f4171df1"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "update cart item",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"quantity\": 3\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/cart/:cartItemId",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "cart",
+                    ":cartItemId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "cartItemId",
+                      "value": "6a01c197b7798c58f4171df1"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "537"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"219-c1eXpTCTEuHxv3a91accmFeyw98\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 11 May 2026 11:53:04 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Cart item updated successfully\",\n    \"data\": {\n        \"items\": [\n            {\n                \"_id\": \"6a01c197b7798c58f4171df1\",\n                \"userId\": \"69f9d6c40e21279d31905a33\",\n                \"productId\": \"69fb2cc5ed35bed40a1922a5\",\n                \"quantity\": 3,\n                \"price\": 2500,\n                \"totalPrice\": 7500,\n                \"isPriceChanged\": false,\n                \"createdAt\": \"2026-05-11T11:46:31.744Z\",\n                \"updatedAt\": \"2026-05-11T11:53:04.624Z\",\n                \"product\": {\n                    \"_id\": \"69fb2cc5ed35bed40a1922a5\",\n                    \"name\": \"Nike Air Max\",\n                    \"image\": \"/uploads/products/1778068675328-738981732.jpg\",\n                    \"price\": 2500,\n                    \"stock\": 12\n                }\n            }\n        ],\n        \"summary\": {\n            \"subtotal\": 7500,\n            \"itemsCount\": 3\n        }\n    },\n    \"errors\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "delete cart item",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/cart/:cartItemId",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cart",
+                ":cartItemId"
+              ],
+              "variable": [
+                {
+                  "key": "cartItemId",
+                  "value": "6a01c197b7798c58f4171df1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Clear Cart",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/cart/clear",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cart",
+                "clear"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Merge Guest Cart",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"items\": [\r\n    {\r\n      \"productId\": \"66c9f2b8e12a9c0012a4d9f1\",\r\n      \"quantity\": 2\r\n    },\r\n    {\r\n      \"productId\": \"66c9f2b8e12a9c0012a4d9f2\",\r\n      \"quantity\": 1\r\n    }\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/cart/merge",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cart",
+                "merge"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "refunds",
+      "item": [
+        {
+          "name": "refund",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"orderId\": \"6a02e61937e5d5228e77b984\",\r\n  \"reason\": \"Product damaged\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/refunds",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "refunds"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Admin - Get All Refunds",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"productId\": \"69fb2cc5ed35bed40a1922a5\",\r\n  \"quantity\": 4\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/refunds/admin",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "refunds",
+                "admin"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Admin - Update Refund Status",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"status\": \"approved\"\r\n}\r\n\r\n// pending\r\n// approved\r\n// refused",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/refunds/:id/status",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "refunds",
+                ":id",
+                "status"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "6a02e71837e5d5228e77b989"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Admin - Update Refund Status",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"status\": \"approved\"\r\n}\r\n\r\n// pending\r\n// approved\r\n// refused",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/refunds/:id/status",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "refunds",
+                    ":id",
+                    "status"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "6a02e71837e5d5228e77b989"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "325"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"145-cDp/2fuzKR3OdNzVpkLgfSF08IA\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 12 May 2026 08:44:24 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Refund status updated successfully\",\n    \"data\": {\n        \"_id\": \"6a02e71837e5d5228e77b989\",\n        \"orderId\": \"6a02e61937e5d5228e77b984\",\n        \"userId\": \"69f9d6c40e21279d31905a33\",\n        \"reason\": \"Product damaged\",\n        \"status\": \"approved\",\n        \"createdAt\": \"2026-05-12T08:38:48.832Z\",\n        \"updatedAt\": \"2026-05-12T08:44:24.148Z\",\n        \"__v\": 0\n    },\n    \"errors\": null\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "testimonial",
+      "item": [
+        {
+          "name": "Create Testimonial",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"message\": \"Great products and fast delivery\",\r\n  \"rating\": 5\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/testimonials",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "testimonials"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Public Testimonials",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"message\": \"Great products and fast delivery\",\r\n  \"rating\": 5\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/testimonials/public",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "testimonials",
+                "public"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get Public Testimonials",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"message\": \"Great products and fast delivery\",\r\n  \"rating\": 5\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/testimonials/public?limit=6",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "testimonials",
+                    "public"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "6"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "93"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"5d-3/QwGP6KuwREO+msFyrp2A2ZH2U\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 12 May 2026 08:58:59 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Public testimonials fetched successfully\",\n    \"data\": [],\n    \"errors\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "Admin - Get All Testimonials",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/testimonials/admin",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "testimonials",
+                "admin"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Admin - Get All Testimonials",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"message\": \"Great products and fast delivery\",\r\n  \"rating\": 5\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/testimonials/admin?page=1&limit=10&status=approved",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "testimonials",
+                    "admin"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "status",
+                      "value": "approved"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "160"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"a0-EyaqUUOY7LBbb4aZDqS11QlOvYw\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 12 May 2026 09:01:08 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"All testimonials fetched successfully\",\n    \"data\": {\n        \"items\": [],\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 0,\n            \"totalPages\": 1\n        }\n    },\n    \"errors\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "Admin Update Testimonial Status",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"status\": \"approved\"\r\n}\r\n\r\n// pending\r\n// approved\r\n// refused",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/testimonials/:id/status",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "testimonials",
+                ":id",
+                "status"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "6a02eb97308a09a5b4f35294"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Admin Update Testimonial Status",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"status\": \"approved\"\r\n}\r\n\r\n// pending\r\n// approved\r\n// refused",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/testimonials/:id/status",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "testimonials",
+                    ":id",
+                    "status"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "6a02eb97308a09a5b4f35294"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "322"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"142-aHXmJ8q1aJf7m8jPRACBuwjy4ZQ\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 12 May 2026 09:02:40 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Testimonial status updated successfully\",\n    \"data\": {\n        \"_id\": \"6a02eb97308a09a5b4f35294\",\n        \"userId\": \"69f9d6c40e21279d31905a33\",\n        \"message\": \"Great products and fast delivery\",\n        \"rating\": 5,\n        \"status\": \"approved\",\n        \"createdAt\": \"2026-05-12T08:57:59.605Z\",\n        \"updatedAt\": \"2026-05-12T09:02:40.607Z\",\n        \"__v\": 0\n    },\n    \"errors\": null\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Admin Reports",
+      "item": [
+        {
+          "name": "admin reports",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/reports/admin",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reports",
+                "admin"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
